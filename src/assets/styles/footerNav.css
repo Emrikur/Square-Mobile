@@ -1,0 +1,35 @@
+palette{
+  --bg: #F5F5F5;
+  --primary: #1B81BC;
+  --secondary: #7D8DA6;
+}
+
+
+
+.footerNav {
+  display: flex;
+  flex-direction: row;
+  margin-top: auto;
+  padding: 2rem 0;
+  text-align: center;
+  justify-content: space-evenly;
+  background-color: var(--social-bg);
+  color: var(--text);
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--secondary);
+  gap: 0.5px;
+}
+.nav-link:hover {
+
+  color: var(--primary);
+}
+.nav-link:focus-within {
+
+  color: var(--primary);
+}
