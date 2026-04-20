@@ -1,9 +1,12 @@
+import '../assets/styles/header.css';
+import { User } from "lucide-react";
 export default function Header() {
   return (
     <>
       <header className="header">
-        <img src="#" alt="Logo" />
-        <h3>Square Mobile</h3>
+        <div className="mobile-logo-header">
+        <img width="120" src="src\assets\images\Aderian_Square-Moon_blue_rgb.svg" alt="Logo" />
+        </div>
         <div
           style={{
             display: "flex",
@@ -15,7 +18,7 @@ export default function Header() {
           }}
         >
           <p>inloggad som: Användare</p>
-          <img src="#" alt="ikon" />
+          <User />
         </div>
       </header>
     </>
