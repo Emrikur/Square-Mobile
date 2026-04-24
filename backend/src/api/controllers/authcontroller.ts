@@ -1,3 +1,5 @@
+import {v4 as uuidv4} from 'uuid';
+
 interface Request {
     body: {
         username: string;
@@ -11,28 +13,30 @@ interface Response{
 
 
 export const login = (req: Request, res: Response) => {
+  const sessionID = uuidv4();
 
   if (!req.body.username || !req.body.password || req.body.username.trim() === '' || req.body.password.trim() === '') {
     return res.status(400).json({ success: false, message: 'Username and password are required' });
   }
 
-    //TODO: Check user authentication, such as username and password
+    //TODO: Check user authentication, such as username and password - see authMiddleware for reference.
     //TODO: Recieve login token?
 
 //? Send the login request body to the console for debugging purposes
   console.log('Login request received with body:', req.body);
 
-  //!
+
 res.json({
     success: true,
     message: 'Login successful',
-    token: 'your_jwt_token_here'
+    token: sessionID
   });
 }
 
 
 
 export const logout = (req: Request, res: Response) => {
+
 
 
 if (!req.body.username || req.body.username.trim() === '') {
