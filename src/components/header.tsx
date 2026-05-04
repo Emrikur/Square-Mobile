@@ -1,6 +1,6 @@
 import '../assets/styles/header.css';
 import { User } from "lucide-react";
-export default function Header() {
+export default function Header(params:{userName:string}) {
   return (
     <>
       <header className="header">
@@ -17,7 +17,7 @@ export default function Header() {
             fontSize: "0.8rem",
           }}
         >
-          <p>inloggad som: Användare</p>
+          <p>inloggad som: {params.userName}</p>
           <User />
         </div>
       </header>

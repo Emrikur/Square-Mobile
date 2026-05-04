@@ -3,9 +3,10 @@ import Footer from "../components/footerNav";
 
 export default function History() {
 
+
   return (
     <>
-    <Header/>
+    <Header />
       <div>
         <h1>History</h1>
       </div>

@@ -8,7 +8,7 @@ interface Request {
 }
 interface Response{
     status: (code: number) => Response;
-    json: (data: { success: boolean; message: string; userName:string, token?: string }) => void;
+    json: (data: { success: boolean; message: string; token: string; userName:string }) => void;
 };
 
 
@@ -26,11 +26,15 @@ const testUsers = [
     { username: 'user9', password: 'password9' }
   ];
 
+
+
   const sessionID = uuidv4();
 
   if (!req.body.username || !req.body.password || req.body.username.trim() === '' || req.body.password.trim() === '') {
-    return res.status(400).json({ success: false, userName:"", message: 'Username and password are required' });
+    return res.status(400).json({ success: false, userName:"", token: "", message: 'Username and password are required' });
   }
+
+
 
 
 //! SQL-Call to FM database to check if the user and password exists
@@ -38,7 +42,7 @@ const testUsers = [
 
 
   if (!testUsers.find(user => user.username === req.body.username && user.password === req.body.password)) {
-    return res.status(401).json({ success: false, userName:"", message: 'Invalid username or password' });
+    return res.status(401).json({ success: false, userName:"", token: "", message: 'Invalid username or password' });
   }else if (testUsers.find(user => user.username === req.body.username && user.password === req.body.password)) {
     res.json({
         success: true,
@@ -55,10 +59,30 @@ const testUsers = [
 //? Send the login request body to the console for debugging purposes
   // console.log('Login request received with body:', req.body);
 
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 export const logout = (req: Request, res: Response) => {
@@ -66,11 +90,11 @@ export const logout = (req: Request, res: Response) => {
 
 
 if (!req.body.username || req.body.username.trim() === '') {
-    return res.status(400).json({ success: false, userName: "", message: 'Username is required for logout' });
+    return res.status(400).json({ success: false, userName: "", token: "", message: 'Username is required for logout' });
   }else {
   console.log('Logout request received', req.body);
 
 //TODO: Clear session data and tokens on logout
 
-  res.json({ success: true, userName: req.body.username, message: 'Logout successful' });}
+  res.json({ success: true, userName: req.body.username, token: "", message: 'Logout successful' });}
 }

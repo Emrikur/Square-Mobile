@@ -4,15 +4,18 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "./context/AuthProvider.tsx";
 // import Header from "./components/header.tsx";
 // import Footer from "./components/footerNav.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
-    <StrictMode>
-      {/* <Header/> */}
-      <App />
-      {/* <Footer/> */}
-    </StrictMode>
+    <AuthProvider>
+      <StrictMode>
+        {/* <Header/> */}
+        <App />
+        {/* <Footer/> */}
+      </StrictMode>
+    </AuthProvider>
   </BrowserRouter>
 );

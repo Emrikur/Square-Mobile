@@ -23,6 +23,12 @@
   border-radius: 10px;
 }
 
+.error-message{
+  color: red;
+  font: 500 16px/1.5 "Inter", sans-serif;
+  text-align: center;
+}
+
 .login-button{
   padding: 10px;
   width: 200px;

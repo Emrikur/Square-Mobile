@@ -2,14 +2,25 @@ import '../assets/styles/login.css';
 import axios from 'axios';
 import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 
 export default function Login() {
 const navigate = useNavigate()
+const {login} = useAuth();
   const [answer,setAnswer] = useState("");
   const [err,setErr] = useState("");
 
+async function getInfo() {
 
+const tokenResponse = await axios({
+    method: 'get',
+    url: 'http://localhost:5000/info',
+
+})
+setAnswer("Checking database for user...");
+console.log(tokenResponse.data.token);
+}
 
 async function submitForm(event: React.FormEvent<HTMLFormElement>) {
 
@@ -18,34 +29,28 @@ const form = event.currentTarget;
   try {
     event.preventDefault();
 
-    console.log( form.username.value, form.password.value);
-    await axios({
+    // console.log( form.username.value, form.password.value);
+   const checkLogin = await axios({
     method: 'post',
     url: 'http://localhost:5000/auth/login',
     data: {
     username: form.username.value,
     password: form.password.value
-  }
-}).then((response) => {
-  if (response.status === 200) {
-    setErr("");
-    console.log(response.data);
-    setAnswer(response.data.message);
+  },
 
-    localStorage.setItem('token', response.data.token)
-    // navigate('/dashboard');
-    // setAnswer("");
-    console.log("Login successful, token stored in localStorage:", response.data.token);
-    setTimeout(() => {
-      navigate('/dashboard');
-    }, 2000);
-  }
-}).catch((error) => {
-  console.error(error);
-  setErr((error.response?.data?.message || error.message));
 }
 
-  );
+)
+if (checkLogin.data.success) {
+
+  setAnswer(checkLogin.data.message);
+   login(checkLogin.data.token, checkLogin.data.userName);
+   navigate('/dashboard', {state:{token: checkLogin.data.token, userName: checkLogin.data.userName}});
+}else {
+  navigate('/login');
+  setErr(checkLogin.data.message);
+}
+
   } catch (error) {
     console.error(error);
     setErr("An error occurred during login");
@@ -71,6 +76,8 @@ const form = event.currentTarget;
       }
       {err && <p className='error-message'>{err}</p>}
       </form>
+
+      <button onClick={getInfo}>Hämta FM-Info</button>
 
     </div>
     </>
