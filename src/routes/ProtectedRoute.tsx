@@ -5,7 +5,7 @@ const ProtectedRoute = ({children}: {children:React.ReactNode}) => {
 
   const { token } = useAuth();
   if(!token){
-    return <Navigate to="/unauthorized" replace />;
+    return <Navigate to="/login" replace />;
   }
   return children;
 }

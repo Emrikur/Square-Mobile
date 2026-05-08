@@ -1,21 +1,17 @@
 import Header from "../components/header";
 import Footer from "../components/footerNav";
-import { useLocation } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Dashboard() {
-  const location = useLocation();
+  const {username} = useAuth()
 
-  const { token, userName } = location.state;
-
-   console.log(location);
-  console.log("Here is your token: " + token);
-  console.log("Here is your username: " + userName);
   return (
     <>
-    <Header userName={userName} />
-      <div>
-        <h1>Dashboard</h1>
-      </div>
+    <Header />
+      <section style={{textAlign:"center"}}>
+        <h1 >Dashboard</h1>
+        <h3 style={{margin:"0 auto",borderBottom:"solid black 1.5px", width:"fit-content", padding:"2px 10px"}}>{username}</h3>
+      </section>
       <Footer />
 
     </>

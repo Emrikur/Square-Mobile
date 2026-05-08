@@ -1,24 +1,28 @@
-import '../assets/styles/header.css';
-import { User } from "lucide-react";
-export default function Header(params:{userName:string}) {
+// import { use } from 'react';
+import "../assets/styles/header.css";
+import { CircleUser } from "lucide-react";
+import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+
+export default function Header() {
+  const { username } = useAuth();
+  const navigate = useNavigate();
+  function toUserPage() {
+    navigate(`/${username}`);
+  }
   return (
     <>
       <header className="header">
         <div className="mobile-logo-header">
-        <img width="120" src="src\assets\images\Aderian_Square-Moon_blue_rgb.svg" alt="Logo" />
+          <a href="/dashboard">
+            <img
+              src="src/assets/images/Sleek_Time_Singularity_logo.png"
+              alt="Logo"
+            />
+          </a>
         </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            gap: "5px",
-            fontSize: "0.8rem",
-          }}
-        >
-          <p>inloggad som: {params.userName}</p>
-          <User />
+        <div className="userHub">
+          <CircleUser onClick={toUserPage} width={35} height={35} />
         </div>
       </header>
     </>
