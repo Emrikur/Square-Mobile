@@ -1,5 +1,5 @@
 import '../assets/styles/errorPages.css'
-import logo from '../assets/images/Aderian_Square-Moon_blue_rgb.svg';
+import logo from "../assets/images/favIcon_Time_Singularity_logo_white.png";
 
 export default function Error404() {
   return (
