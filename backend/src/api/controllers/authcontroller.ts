@@ -1,100 +1,126 @@
-import {v4 as uuidv4} from 'uuid';
+// import {v4 as uuidv4} from 'uuid';
+import pool from "../../db"
+// import axios from "axios";
+import jwt from 'jsonwebtoken';
+import bcrypt from "bcrypt"
+import dotenv from "dotenv";
+dotenv.config();
+import { getEnv } from "../../config/env";
+import { Response } from "express";
+
 
 interface Request {
-    body: {
-        username: string;
-        password: string;
-    };
+  body: {
+    email: string;
+    password: string;
+  };
 }
-interface Response{
-    status: (code: number) => Response;
-    json: (data: { success: boolean; message: string; token: string; userName:string }) => void;
+type LoginResponse =
+  | { success: true; message: string; token: string; full_name:string, email:string }
+  | { success: false; message: string };
+
+export const login = async (req: Request, res: Response<LoginResponse>) => {
+  const env = getEnv();
+  const { email, password } =  req.body;
+  const DB_URL = env.DATABASE_URL;
+
+  try {
+
+
+    //Get all users and check if it validates
+    const result = await pool.query(
+      'SELECT * FROM users WHERE email = $1',
+      [email.toLocaleLowerCase()]
+    );
+    console.log(req.body)
+  const user = result.rows[0];
+  console.log("Found user: ",user)
+
+    if (!DB_URL) {
+      console.error("Database url is not set in the env-file");
+      return res
+        .status(500)
+        .json({ success: false, message: "Server configuration error" });
+    }
+
+
+    if (
+      !email ||
+      !password ||
+      email.trim() === "" ||
+      password.trim() === ""
+    ) {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "email and password are required",
+        });
+    }
+
+    try {
+
+      if (!user) {
+
+        return res
+          .status(401)
+          .json({ success: false, message: "Invalid email or password" });
+      }
+const validPassword = await bcrypt.compare(password, user.password_hash)
+
+if(!validPassword){
+  return res.status(401).json({success: false, message: 'Invalid credentials' })
+}
+
+const token = jwt.sign(
+  {
+    userId:user.id,
+    email:user.email
+  },
+  env.JWT_SECRET!,
+  { expiresIn: "24h" }
+);
+res.json({
+  token: token,
+  message:`Hello ${user.full_name}, redirecting`,
+  full_name: user.full_name,
+  success: true,
+  email:user.email
+ })
+
+
+    } catch (err) {
+      console.log("Database call failed:", err);
+    }
+  } catch (err){
+    console.error("DB error: ", err);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to connect to API" });
+  }
+
 };
 
-
-export const login = (req: Request, res: Response) => {
-
-const testUsers = [
-    { username: 'user1', password: 'password1' },
-    { username: 'user2', password: 'password2' },
-    { username: 'user3', password: 'password3' },
-    { username: 'user4', password: 'password4' },
-    { username: 'user5', password: 'password5' },
-    { username: 'user6', password: 'password6' },
-    { username: 'user7', password: 'password7' },
-    { username: 'user8', password: 'password8' },
-    { username: 'user9', password: 'password9' }
-  ];
-
-
-
-  const sessionID = uuidv4();
-
-  if (!req.body.username || !req.body.password || req.body.username.trim() === '' || req.body.password.trim() === '') {
-    return res.status(400).json({ success: false, userName:"", token: "", message: 'Username and password are required' });
-  }
-
-
-
-
-//! SQL-Call to FM database to check if the user and password exists
-//! Will be replaced with actual database calls in the future, currently uses a hardcoded list of users for testing purposes
-
-
-  if (!testUsers.find(user => user.username === req.body.username && user.password === req.body.password)) {
-    return res.status(401).json({ success: false, userName:"", token: "", message: 'Invalid username or password' });
-  }else if (testUsers.find(user => user.username === req.body.username && user.password === req.body.password)) {
-    res.json({
-        success: true,
-        message: `Hello ${req.body.username}, redirecting...`,
-        userName: req.body.username,
-        token: sessionID
-    });
-
-  }
-
-    //TODO: Check user authentication, such as username and password - see authMiddleware for reference.
-    //TODO: Recieve login token?
-
-//? Send the login request body to the console for debugging purposes
-  // console.log('Login request received with body:', req.body);
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export const logout = (req: Request, res: Response) => {
+  if (!req.body.email || req.body.email.trim() === "") {
+    return res
+      .status(400)
+      .json({
+        success: false,
+        email: "",
+        token: "",
+        message: "email is required for logout",
+      });
+  } else {
+    console.log("Logout request received", req.body);
 
+    //TODO: Clear session data and tokens on logout
 
-
-if (!req.body.username || req.body.username.trim() === '') {
-    return res.status(400).json({ success: false, userName: "", token: "", message: 'Username is required for logout' });
-  }else {
-  console.log('Logout request received', req.body);
-
-//TODO: Clear session data and tokens on logout
-
-  res.json({ success: true, userName: req.body.username, token: "", message: 'Logout successful' });}
-}
+    res.json({
+      success: true,
+      email: req.body.email,
+      token: "",
+      message: "Logout successful",
+    });
+  }
+};

@@ -108,7 +108,7 @@ main{
   position: absolute;
   line-height: 2em;
   font-weight: bold;
-  color: #FFEE00;
+  color: #1A64FF;
   top: 0;
   left: 0;
   -webkit-backface-visibility: hidden;
@@ -139,7 +139,7 @@ main{
 .checkbox-wrapper-10 .tgl-flip:checked + .tgl-btn:after {
   transform: rotateY(0);
   left: 0;
-  background: #1A64FF;
+  background: #FFFF;
 }
 
 .checkbox-wrapper-10 .tgl-flip:checked + .tgl-btn:active:after {

@@ -1,0 +1,16 @@
+.logout-Btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px;
+  height: 44px;
+  margin: 16px auto;
+  width: 200px;
+  border-radius: 10px;
+  background: #0f7ad9;
+  background: linear-gradient(180deg, rgba(15, 122, 217, 1) 0%, #0d58b8 100%);
+  color: white;
+  border: none;
+}

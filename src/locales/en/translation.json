@@ -1,0 +1,13 @@
+
+{
+  "nav":{
+    "iconHover":{
+      "title":"To my page"
+    }
+  },
+  "login":{
+    "mailpholder":"Mail adress",
+    "passwordpholder":"Password",
+    "loginbutton":"Log in"
+  }
+}
