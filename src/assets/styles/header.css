@@ -1,8 +1,4 @@
-palette{
-  --bg: #F5F5F5;
-  --primary: #1B81BC;
-  --secondary: #7D8DA6;
-}
+
 
 .header{
     display: flex;
@@ -18,6 +14,7 @@ palette{
   align-items: center;
   margin-right: 2rem;
   height: 80%;
+  gap: 20px;
 }
 .mobile-logo-header{
 width: fit-content;

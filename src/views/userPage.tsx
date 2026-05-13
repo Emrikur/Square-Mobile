@@ -1,17 +1,35 @@
 import { useAuth } from "../hooks/useAuth";
+import "../assets/styles/userPage.css"
+import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import FooterNav from "../components/footerNav";
-export default function UserPage() {
-  const { username } = useAuth();
+import { LogOut } from "lucide-react";
 
+export default function UserPage() {
+  const { username,role, logout } = useAuth();
+  const navigate = useNavigate()
+
+  function handleLogout() {
+      logout();
+      navigate("/login");
+    }
   return (
     <>
       <Header />
-     <div style={{textAlign:"center"}}>
-        <h1 >My page</h1>
-        <h3 style={{margin:"0 auto",borderBottom:"solid black 1.5px", width:"fit-content", padding:"2px 10px"}}>{username}</h3>
+     <section className="userpage-section">
+        <div className="title-wrapper">
+          <p className="user-name">{username}</p>
+          <p className="user-role">{role}</p>
+        </div>
+      <div onClick={handleLogout} className="default-Btn" >
+        <label htmlFor="logoutbutton">Log out</label>
+        {<LogOut name="logoutButton"  />}
       </div>
+      </section>
+
+      <footer style={{marginTop:"auto"}}>
       <FooterNav />
+      </footer>
     </>
   );
 }

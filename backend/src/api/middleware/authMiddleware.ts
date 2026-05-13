@@ -1,16 +1,26 @@
 import  jwt  from "jsonwebtoken";
+import {Request, Response, NextFunction} from "express"
+import { getEnv } from "../../config/env";
 
-const authMiddleware = (req:{headers:{authorization?:string}}, res:{status:(code:number)=>{json:(data:object)=>void}}, next:()=>void) => {
+const authMiddleware = (req:Request, res:Response, next:NextFunction /* req:{headers:{authorization?:string}}, res:{status:(code:number)=>{json:(data:object)=>void}}, next:()=>void */) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
+    const env = getEnv()
     if (!token) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-      req.user = decoded
+      const secret = env.JWT_SECRET;
+      if(!secret){
+        return res.status(500).json({error:"JWT secret not correctly configured"})
+      }
+      const decoded = jwt.verify(token, secret) as unknown as {userId:string}
+      if(typeof decoded === "string" || !decoded){
+        return res.status(401).json({error:"Invalid token"})
+      }
+      req.userId = decoded.userId
       next();
     }
     catch (err) {

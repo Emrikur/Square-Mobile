@@ -5,9 +5,9 @@ export default function Statistics() {
   return (
     <>
     <Header/>
-      <div>
+      <section style={{minHeight:"70vh"}}>
         <h1>Statistics</h1>
-      </div>
+      </section>
       <Footer/>
     </>
   );

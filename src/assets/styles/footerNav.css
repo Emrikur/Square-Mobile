@@ -6,16 +6,7 @@ palette{
 
 
 
-.footerNav {
-  display: flex;
-  flex-direction: row;
-  margin-top: auto;
-  padding: 2rem 0;
-  text-align: center;
-  justify-content: space-evenly;
-  background-color: var(--social-bg);
-  color: var(--text);
-}
+
 
 .nav-link {
   display: flex;

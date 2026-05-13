@@ -1,6 +1,6 @@
 // import { use } from 'react';
 import "../assets/styles/header.css";
-import { CircleUser } from "lucide-react";
+import { CircleUser,House } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +9,9 @@ export default function Header() {
   const navigate = useNavigate();
   function toUserPage() {
     navigate(`/${username}`);
+  }
+  function toDashboard() {
+    navigate(`/dashboard`);
   }
   return (
     <>
@@ -22,6 +25,7 @@ export default function Header() {
           </a>
         </div>
         <div className="userHub">
+          <House onClick={toDashboard} width={35} height={35}/>
           <CircleUser onClick={toUserPage} width={35} height={35} />
         </div>
       </header>
