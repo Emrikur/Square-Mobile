@@ -30,7 +30,7 @@ export default function Login() {
         const response = checkLogin.data;
         setAnswer(response.message);
         setTimeout(() => {
-          login(response.token, response.email, response.full_name);
+          login(response.token, response.email, response.full_name, response.role);
           navigate("/dashboard");
 
         }, 3000);

@@ -13,10 +13,11 @@ interface Request {
   body: {
     email: string;
     password: string;
+    userId:string
   };
 }
 type LoginResponse =
-  | { success: true; message: string; token: string; full_name:string, email:string }
+  | { success: true; message: string; token: string; full_name:string, email:string, role:string }
   | { success: false; message: string };
 
 export const login = async (req: Request, res: Response<LoginResponse>) => {
@@ -27,7 +28,7 @@ export const login = async (req: Request, res: Response<LoginResponse>) => {
   try {
 
 
-    //Get all users and check if it validates
+    //Get user which match with email and check if it validates
     const result = await pool.query(
       'SELECT * FROM users WHERE email = $1',
       [email.toLocaleLowerCase()]
@@ -80,12 +81,14 @@ const token = jwt.sign(
   env.JWT_SECRET!,
   { expiresIn: "24h" }
 );
+console.log("Here is the user role: ",user.role)
 res.json({
   token: token,
   message:`Hello ${user.full_name}, redirecting`,
   full_name: user.full_name,
   success: true,
-  email:user.email
+  email:user.email,
+  role:user.role
  })
 
 

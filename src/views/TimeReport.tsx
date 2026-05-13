@@ -5,9 +5,9 @@ export default function TimeReport() {
   return (
     <>
     <Header/>
-      <div>
+      <section style={{minHeight:"70vh"}}>
         <h1>Time Report</h1>
-      </div>
+      </section>
       <Footer/>
     </>
   );

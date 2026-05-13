@@ -1,8 +1,12 @@
 import 'dotenv/config';
 import express from 'express';
+import {Request, Response, NextFunction} from "express"
 import cors from 'cors';
 import { getEnv }  from './src/config/env';
 import router from './src/api/routes/auth';
+import graphRoutes from "./src/api/routes/graphRoutes"
+import modalRoute from "./src/api/routes/modalRoute"
+
 
 const env = getEnv();
 
@@ -16,13 +20,16 @@ app.use(cors({
 
 app.use(express.json());
 
+app.use("/dashboard/graph", graphRoutes)
+app.use("/modal", modalRoute)
 
 
 app.use('/auth', router);
 
-app.use((err:Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
+app.use((err:Error, req: Request, res: Response, next: NextFunction) => {
   console.error('Error:', err);
   res.status(500).json({ error: 'Internal Server Error'})
+  next()
 });
 
 app.listen(PORT, () => {

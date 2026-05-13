@@ -1,11 +1,12 @@
 import { createContext } from "react";
 
-//Types för Token och Username samt login/logut funktionerna
+//Types för Token och Username samt login/logout funktionerna
 interface AuthContextType {
   token: string | null;
   email: string | null;
   username:string | null;
-  login: (token: string, email: string, username:string) => void;
+  role:string | null;
+  login: (token: string, email: string, username:string,role:string) => void;
   logout: () => void;
 }
 

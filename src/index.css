@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 :root {
 
   /* ################################ */
@@ -13,30 +14,36 @@
 
   --text: #6b6375;
   --text-h: #08060d;
+  --text-muted: #808080;
   --bg: #fff;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
   --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
   --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
+  --social-bg: rgba(244, 243, 236);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
+  --Inter: "Inter", sans-serif;
 
-  font: 18px/145% var(--sans);
+  font: 16px/100% var(--Inter);
 
 
 }
 body {
   min-height: 100vh;
   padding: 0;
+  padding-top: 4.1rem;
+  padding-bottom: 8rem;
   margin: 0;
+  z-index: 1;
   overflow-x: hidden;
   background-color: var(--bg);
+  font-family: var(--Inter);
 }
 .header{
   display: flex;
@@ -45,4 +52,52 @@ body {
   justify-content: space-between;
   background-color: var(--social-bg);
   color: var(--text);
+}
+
+.default-Btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px;
+  height: 44px;
+  margin: 16px auto;
+  width: 200px;
+  border-radius: 10px;
+  background: #0f7ad9;
+  background: linear-gradient(180deg, rgba(15, 122, 217, 1) 0%, #0d58b8 100%);
+  color: white;
+  border: none;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  margin-bottom: 1rem;
+}
+
+.footerNav{
+   display: flex;
+  flex-direction: row;
+  padding: 2rem 0;
+  text-align: center;
+  justify-content: space-evenly;
+  background-color: var(--social-bg);
+  color: var(--text);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 100;
 }

@@ -1,0 +1,49 @@
+.modal-form{
+  z-index: 50;
+}
+.modal-company-select{
+    width: 80%;
+    height: 44px;
+    border-radius: 5px;
+  }
+.report-modal-hours{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+}
+.report-modal-input{
+  width: 80%;
+  height: 44px;
+  font-size: 16px;
+  border: .5px solid black;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.hours{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.hour-rate{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#modal-textarea{
+  margin-top: 5px;
+  vertical-align: text-top;
+  width: 100%;
+  border: .5px solid black;
+  border-radius: 5px;
+  resize: none;
+  white-space: pre-wrap;
+  min-height: 6rem;
+  max-height: 6rem;
+  overflow-y: scroll;
+  font-size: 14px;
+  z-index: 10;
+}

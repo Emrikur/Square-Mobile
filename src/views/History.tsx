@@ -7,9 +7,9 @@ export default function History() {
   return (
     <>
     <Header />
-      <div>
+      <section style={{minHeight:"70vh"}}>
         <h1>History</h1>
-      </div>
+      </section>
       <Footer/>
     </>
   );
