@@ -12,9 +12,7 @@ createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <AuthProvider>
       <StrictMode>
-        {/* <Header/> */}
         <App />
-        {/* <Footer/> */}
       </StrictMode>
     </AuthProvider>
   </BrowserRouter>

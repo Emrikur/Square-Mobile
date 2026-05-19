@@ -11,6 +11,7 @@ import Error401 from "./views/401Error";
 import Error404 from "./views/notFound";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { useAuth } from "./hooks/useAuth";
+import CompanyCard from "./views/CompanyCard";
 // import type { JSX } from 'react'
 
 function App() {
@@ -18,8 +19,6 @@ function App() {
 
   return (
     <Routes>
-      //!TODO Needs fixing, currently redirects to error page on startup, but
-      should redirect to login if not authenticated
       <Route
         path="/"
         element={
@@ -40,6 +39,14 @@ function App() {
         element={
           <ProtectedRoute>
             <History />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/company/:companyname"
+        element={
+          <ProtectedRoute>
+            <CompanyCard />
           </ProtectedRoute>
         }
       />

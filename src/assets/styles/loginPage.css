@@ -1,9 +1,8 @@
 main{
-  height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
 }
 .language-toggle-container{
   justify-self: flex-start;
@@ -18,7 +17,7 @@ main{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: auto;
+  margin: auto auto;
 }
 
 
@@ -28,33 +27,6 @@ main{
 /* ########################################################################## */
 .checkbox-wrapper-10 .tgl {
   display: none;
-}
-
-.checkbox-wrapper-10 .tgl,
-  .checkbox-wrapper-10 .tgl:after,
-  .checkbox-wrapper-10 .tgl:before,
-  .checkbox-wrapper-10 .tgl *,
-  .checkbox-wrapper-10 .tgl *:after,
-  .checkbox-wrapper-10 .tgl *:before,
-  .checkbox-wrapper-10 .tgl + .tgl-btn {
-  box-sizing: border-box;
-}
-
-.checkbox-wrapper-10 .tgl::-moz-selection,
-  .checkbox-wrapper-10 .tgl:after::-moz-selection,
-  .checkbox-wrapper-10 .tgl:before::-moz-selection,
-  .checkbox-wrapper-10 .tgl *::-moz-selection,
-  .checkbox-wrapper-10 .tgl *:after::-moz-selection,
-  .checkbox-wrapper-10 .tgl *:before::-moz-selection,
-  .checkbox-wrapper-10 .tgl + .tgl-btn::-moz-selection,
-  .checkbox-wrapper-10 .tgl::selection,
-  .checkbox-wrapper-10 .tgl:after::selection,
-  .checkbox-wrapper-10 .tgl:before::selection,
-  .checkbox-wrapper-10 .tgl *::selection,
-  .checkbox-wrapper-10 .tgl *:after::selection,
-  .checkbox-wrapper-10 .tgl *:before::selection,
-  .checkbox-wrapper-10 .tgl + .tgl-btn::selection {
-  background: none;
 }
 
 .checkbox-wrapper-10 .tgl + .tgl-btn {
@@ -154,6 +126,6 @@ main{
 
 
 img{
-  width: 70%;
+  width: 80%;
   margin-bottom: 1rem;
 }

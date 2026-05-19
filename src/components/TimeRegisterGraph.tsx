@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import "../assets/styles/graphs.css";
 import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { formatGraphData } from "../lib/functions";
+import { formatDoughnutData, formatGraphData, weekRange } from "../lib/functions";
 import type { Filter } from "../lib/types";
-import { Bar } from "react-chartjs-2";
+import { Bar, Doughnut } from "react-chartjs-2";
 import { formatEventDateTime } from "../lib/functions";
-import { formatWeekTime } from "../lib/functions";
+// import { formatWeekTime } from "../lib/functions";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
+  ArcElement,
   Title,
   Tooltip,
   Legend,
@@ -22,6 +24,7 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
+  ArcElement,
   Title,
   Tooltip,
   Legend,
@@ -29,14 +32,18 @@ ChartJS.register(
 );
 
 export default function TimeRegisterGraph() {
+
+
   interface GraphType {
     id: string;
+    company_id: string;
     company_name: string;
     work_date: string;
     hours_worked: string;
     filter:Filter
   }
 
+  const navigate = useNavigate()
   const { token } = useAuth();
   const [filter, setGraphFilter] = useState<Filter>("week");
   // const [filterData, setFilterData] = useState<Array<string>>([])
@@ -54,9 +61,9 @@ export default function TimeRegisterGraph() {
 
       // console.log("THE RESPONSE.JSON: ", checkGraph.data);
 
+      // console.log("This is the DATA FROM THE COMPANY CALL", checkGraph.data.data)
       //  setFilterData(checkGraph.data.response)
       const response = checkGraph.data.data;
-      // console.log("This is the respons in modal", response)
       setResponseData(response);
     }
     // console.log(token, email)
@@ -84,13 +91,29 @@ const sortedData = [...responseData].sort(
     (a, b) => new Date(a.work_date).getTime() - new Date(b.work_date).getTime()
   );
 
+
+
 const currentHours = currentWeek.reduce((sum, entry) => sum + Number(entry.hours_worked), 0)
 const weekTarget = 40;
-const currentDate = Date()
+// const currentDate = Date()
+const currentMonth = new Date().toLocaleDateString("en-US", { month: "short" })
 const circumference = 2 * Math.PI * 60
 const percentage = Math.min(currentHours / weekTarget, 1)
 const offset = circumference * (1 - percentage)
 const excessHours = (currentHours - weekTarget) * 1.5
+
+const doughnutOptions = {
+  plugins: {
+    datalabels: {
+      color: "white",
+      font: {
+        size: 18,
+        weight: "bold" as const
+      }
+    }
+  }
+}
+
 console.log(`Current flex: ${excessHours}hrs`,)
   return (
     <>
@@ -99,9 +122,10 @@ console.log(`Current flex: ${excessHours}hrs`,)
 
           <div className="week-summary-data">
           <h4 style={{margin:"0", fontWeight:"500"}}>This week</h4>
-          <p>{formatWeekTime(currentDate)}</p>
+          {/* <p>{formatWeekTime(currentDate)}</p> */}
+          <p style={{marginTop:".5rem"}}>{weekRange(new Date())} {currentMonth} {new Date().getFullYear()}</p>
 
-          {currentHours ?<p className="week-sum">{currentHours} <span style={{fontWeight:"500", fontSize:"16px"}}>hrs</span></p>  :null }
+          {currentHours ? <p className="week-sum">{currentHours} <span style={{fontWeight:"500", fontSize:"16px"}}>hrs</span></p>  : <p className="week-sum">0<span style={{fontWeight:"500", fontSize:"16px"}}>hrs</span></p> }
           <p>out of 40 hrs</p>
           </div>
           <div className="week-summary-chart">
@@ -123,48 +147,61 @@ console.log(`Current flex: ${excessHours}hrs`,)
 
         <p className="reg-hour-title">Registered Hours</p>
         <div className="timegraph-wrapper">
-          <p
-            className={
+          <div onClick={() => setGraphFilter("week")} className={
               filter === "week"
                 ? "graph-week-selected"
                 : "graph-week-unselected"
-            }
-            onClick={() => setGraphFilter("week")}
+            }>
+          <p style={{margin:"0", padding:"0"}}
+
+
           >
             Week
           </p>
-          <p
-            className={
+          <p style={{margin:"0", padding:"0", fontSize:"13px"}}>( {weekRange(new Date())} )</p>
+
+          </div>
+          <div onClick={() => setGraphFilter("month")} className={
               filter === "month"
                 ? "graph-month-selected"
                 : "graph-month-unselected"
-            }
-            onClick={() => setGraphFilter("month")}
+            }>
+          <p style={{margin:"0", padding:"0"}}
           >
             Month
           </p>
-          <p
-            className={
+          <p style={{fontSize:"13px", margin:"0", padding:"0"}}>( {currentMonth} )</p>
+          </div>
+          <div onClick={() => setGraphFilter("year")} className={
               filter === "year"
                 ? "graph-year-selected"
                 : "graph-year-unselected"
-            }
-            onClick={() => setGraphFilter("year")}
+            }>
+          <p
+style={{margin:"0", padding:"0"}}
+
           >
             Year
           </p>
+          <p style={{fontSize:"13px", margin:"0", padding:"0"}}>( {new Date().getFullYear()} )</p>
+
+          </div>
         </div>
         {/* Graphs */}
         <div>
           {responseData && responseData.length > 0 ? (
             <div>
               <div>
-                <Bar style={{width:"90vw", height:"auto"}} data={formatGraphData(responseData, filter)} />
+
+                {filter ==="month" ? <Doughnut style={{width:"90vw", height:"auto"}} data={formatDoughnutData(responseData)} options={doughnutOptions}/> : <Bar style={{width:"90vw", height:"auto"}} data={formatGraphData(responseData, filter)} />}
+
               </div>
               <div className="graph-table-container">
+                <h3>Recent Entries:</h3>
                 <table
                 className="graph_data"
                 >
+
                   <thead>
                     <tr className="graph-data-headers">
                       <th>Date</th>
@@ -175,12 +212,13 @@ console.log(`Current flex: ${excessHours}hrs`,)
 
 
                   <tbody>
-                    {responseData && sortedData.map((p) => (
+
+                    {responseData && sortedData.slice(-5).reverse().map((p) => (
                       <tr key={p.id}
                       >
 
                         <td>{formatEventDateTime(p.work_date)}</td>
-                        <td>{p.company_name}</td>
+                        <td style={{textDecoration:"underline"}} onClick={() => navigate(`/company/${p.company_name}`,{state: {id:p.company_id}})}>{p.company_name}</td>
                         <td>{p.hours_worked}</td>
                       </tr>
                     ))}

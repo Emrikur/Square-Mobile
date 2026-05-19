@@ -1,6 +1,5 @@
 import '../assets/styles/settings.css'
-import Header from "../components/header";
-import Footer from "../components/footerNav";
+import LayoutWrapper from "../components/LayoutWrapper";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { LogOut } from "lucide-react";
@@ -19,8 +18,7 @@ export default function Settings() {
   }
 
   return (
-    <>
-      <Header />
+    <LayoutWrapper>
       <section style={{minHeight:"70vh"}}>
       <div style={{textAlign:"center"}}>
         <h1 >Settings</h1>
@@ -47,7 +45,6 @@ export default function Settings() {
         {<LogOut name="logoutButton"  />}
       </div>
       </section>
-      <Footer />
-    </>
+    </LayoutWrapper>
   );
 }
