@@ -54,7 +54,7 @@ export default function Login() {
   return (
     <>
       <div className="login-container">
-        <h1>Time Singularity</h1>
+        {/* <h1 style={{fontFamily:"var(--TimeburnerBold)"}}>Time Singularity</h1> */}
         <form className="login-form" onSubmit={submitForm}>
           <input
             name="email"

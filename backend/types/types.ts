@@ -1,5 +1,3 @@
-export type Filter = "week" | "month" | "year";
-
 export interface FormData {
   id:string,
   date:string,

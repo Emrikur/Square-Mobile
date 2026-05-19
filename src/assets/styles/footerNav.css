@@ -1,12 +1,21 @@
-palette{
-  --bg: #F5F5F5;
-  --primary: #1B81BC;
-  --secondary: #7D8DA6;
+.footerNav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--bg);
+  padding: 0.5rem 0;
+  gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  height: 90px;
+  border-top: 1px solid var(--border);
 }
 
-
-
-
+.footerNav div {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
 
 .nav-link {
   display: flex;
@@ -15,12 +24,13 @@ palette{
   text-decoration: none;
   color: var(--secondary);
   gap: 0.5px;
+  transition: color 0.3s ease;
 }
+
 .nav-link:hover {
-
   color: var(--primary);
 }
-.nav-link:focus-within {
 
-  color: var(--primary);
+.nav-link:focus-within {
+color: var(--primary);
 }

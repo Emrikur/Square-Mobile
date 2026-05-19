@@ -1,4 +1,20 @@
 .userpage-section{
- text-align:center;
- min-height:70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5rem;
+  text-align:center;
+}
+
+.title-wrapper {
+  margin: 0 auto;
+  border-bottom: solid black 1.5px;
+  width: fit-content;
+  padding: 0 30px;
+  margin-top: 2px;
+}
+
+.default-Btn{
+  margin-top: auto;
 }

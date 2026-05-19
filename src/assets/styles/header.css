@@ -7,20 +7,41 @@
     padding-top: 20px;
     background-color: var(--social-bg);
     color: #333;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .userHub{
   display: flex;
   align-items: center;
   margin-right: 2rem;
-  height: 80%;
+
   gap: 20px;
 }
 .mobile-logo-header{
 width: fit-content;
 height: fit-content;
 
-  img{
-margin: 0;
-  }
+}
+
+#logo-company-header{
+  font-family:var(--TimeburnerBold);
+  color:black;
+  margin-left:1rem;
+  text-decoration:none;
+
+}
+.header-home-link{
+  height: 35px;
+  width: 35px;
+}
+
+#user-avatar{
+margin:0 0;
+border:3px solid black;
+border-radius:50%;
+height: 35px;
+width: 35px;
 }

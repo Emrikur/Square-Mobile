@@ -1,8 +1,10 @@
 // import { use } from 'react';
 import "../assets/styles/header.css";
-import { CircleUser,House } from "lucide-react";
+import { House } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import avatar from "../assets/images/avatars/avatar-bear.png"
+// import logo from "../assets/images/navbar-square-logo.png"
 
 export default function Header() {
   const { username } = useAuth();
@@ -18,15 +20,16 @@ export default function Header() {
       <header className="header">
         <div className="mobile-logo-header">
           <a href="/dashboard">
-            <img
-              src="src/assets/images/Sleek_Time_Singularity_logo.png"
+            {/* <img
+              src={logo}
               alt="Logo"
-            />
+            /> */}
+            <h1 id="logo-company-header">Time Singularity</h1>
           </a>
         </div>
         <div className="userHub">
-          <House onClick={toDashboard} width={35} height={35}/>
-          <CircleUser onClick={toUserPage} width={35} height={35} />
+          <House  height={35} width={35} onClick={toDashboard}/>
+          <img id="user-avatar" onClick={toUserPage} src={avatar} alt="an image-link to the user page of a oil painted bear, sitting." />
         </div>
       </header>
     </>

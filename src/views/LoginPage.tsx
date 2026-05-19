@@ -1,12 +1,12 @@
 import Login from "../components/login";
-import logo from "../assets/images/favIcon_Time_Singularity_logo_white.png";
+import logo from "../assets/images/navbar-square-logo.png";
 import "../assets/styles/loginPage.css";
 export default function LoginPage() {
   return (
     <>
       <main>
-        <div className="language-toggle-container">
-          {/* //TODO Lägg till så att språk på hela sidan ändras vid toggle */}
+        {/* <div className="language-toggle-container">
+
           <div className="checkbox-wrapper-10">
             <input type="checkbox" id="cb5" className="tgl tgl-flip" />
             <label
@@ -16,7 +16,7 @@ export default function LoginPage() {
               className="tgl-btn"
             ></label>
           </div>
-        </div>
+        </div> */}
         <div className="login-wrapper">
           <img src={logo} alt="Logo" />
           <Login />

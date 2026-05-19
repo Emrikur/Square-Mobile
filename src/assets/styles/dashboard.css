@@ -1,12 +1,10 @@
-.title-wrapper {
-  margin: 0 auto;
-  border-bottom: solid black 1.5px;
-  width: fit-content;
-  padding: 0 30px;
-  margin-top: 2px;
-}
+
 
 .dashboard-hero {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   padding-left: 10px;
   padding-bottom: 2rem;
   text-align: left;
