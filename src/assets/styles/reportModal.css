@@ -1,45 +1,95 @@
 .modal-form{
   z-index: 50;
-  width: 80%;
+  max-width: 400px;
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  box-sizing: border-box;
 }
 .modal-company-select{
-width: 100%;
+    width: 92%;
     height: 44px;
     border-radius: 5px;
-    padding: 0 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+    margin-bottom: .5rem;
   }
-.report-modal-hours{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 80%;
-}
-.report-modal-input{
+
+  .form-option{
+    font-size: 10px;
+
+  }
+/* .date-wrapper{
   width: 100%;
-  height: 44px;
+  display: flex;
+  justify-content: center;
+  margin-top: .5rem;
+} */
+
+  .input-date{
+    width: 90%;
+    height: 48px;
+    border-radius: 5px;
+  }
+
+
+
+#hours{
+  width: 20%;
+  height: 48px;
+  font-size: 16px;
+  border: .5px solid black;
+  border-radius: 5px;
+  margin-top: .5rem;
+  padding: 0 10px;
+}
+
+.peptalk{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  height: 38px;
+  font-size: 14px;
+  border: 1px dashed black;
+  border-radius: 5px;
+  text-align: center;
+  padding: 6.5px;
+}
+
+
+
+
+
+
+/* .report-modal-input{
+  width: 100%;
+  height: 48px;
   font-size: 16px;
   border: .5px solid black;
   border-radius: 5px;
   margin-top: 5px;
   padding: 0 10px;
 }
-
-.hours{
+ */
+.description-wrapper{
+  width: 90%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  label{
+    align-self: flex-start;
+    margin-bottom: 5px;
+  }
 }
-.hour-rate{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
 #modal-textarea{
   margin-top: 5px;
   vertical-align: text-top;
-  width: 100%;
+  width: 90%;
   border: .5px solid black;
   border-radius: 5px;
   resize: none;
@@ -62,4 +112,26 @@ width: 100%;
   padding: 1rem;
   font-size: 18px;
   transition: 3s ease-in-out;
+}
+
+.entry-submit-btn{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px;
+  height: 44px;
+  margin: 0 auto;
+  width: 90%;
+  border-radius: 10px;
+  background: #5670F5;
+  background: linear-gradient(
+    180deg,
+    rgba(86, 112, 245, 1) 0%,
+    rgba(61, 52, 220, 1) 100%
+  );
+  color: white;
+  border: none;
+  transition: 2s ease-in-out;
 }

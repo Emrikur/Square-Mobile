@@ -1,16 +1,15 @@
 import bcrypt from "bcryptjs";
 import type { ChartData } from "chart.js";
 import type { Filter } from "./types";
-
-//! "###" marks the separation of functions.
+import axios from "axios";
 
 
 
 interface GraphEntry{
-company_name:string,
-hours_worked:string,
-work_date:string,
-filter:string
+  company_name:string,
+  hours_worked:string,
+  work_date:string,
+  filter:string
 }
 
 
@@ -27,20 +26,32 @@ export async function createHash(password: string) {
     return "Password too long"
   }
 }
-export function formatEventDateTime(dateTime: string | Date) {
-  const date = new Date(dateTime);
-  const dateStr = date.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "2-digit",
-  });
-  /* const timeStr = date.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }); */
-  return `${dateStr}`;
+
+
+
+//##############################################################################
+
+
+
+export function formatEventDateTime(dateTime: string | Date, option?:Intl.DateTimeFormatOptions) {
+const dateObj = new Date(dateTime)
+
+  if(!option){
+    return dateObj.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "2-digit",
+    })
+
 }
+return dateObj.toLocaleDateString("en-US", option) /* lägga till önskad formatering, ex: {year:"numeric", month:"2-digit", day:"short"} */
+}
+
+
+
+//##############################################################################
+
+
 
 export function formatWeekTime(dateTime: string | Date) {
   const date = new Date(dateTime);
@@ -52,6 +63,13 @@ export function formatWeekTime(dateTime: string | Date) {
 
   return `${dateStr}`;
 }
+
+
+
+//##############################################################################
+
+
+
 export function formatEventDateDayTime(dateTime: string | Date) {
 
   const date = new Date(dateTime);
@@ -69,13 +87,13 @@ export function formatEventDateDayTime(dateTime: string | Date) {
 
 export function formatGraphData(responseData: GraphEntry[], filter:Filter): ChartData<"bar", (number | null)[], string> {
 
-if (filter === "year") {
-  const sortedData = [...responseData].sort(
-    (a, b) => new Date(a.work_date).getTime() - new Date(b.work_date).getTime()
-  );
-  const months = [...new Set(sortedData.map((entry) =>
-    new Date(entry.work_date).toLocaleString("en-US", { month: "long" })
-  ))];
+  if (filter === "year") {
+    const sortedData = [...responseData].sort(
+      (a, b) => new Date(a.work_date).getTime() - new Date(b.work_date).getTime()
+    );
+    const months = [...new Set(sortedData.map((entry) =>
+      new Date(entry.work_date).toLocaleString("en-US", { month: "long" })
+    ))];
 
 
   return {
@@ -125,9 +143,12 @@ const dates = [...new Set(responseData.map((entry) => entry.work_date))].sort((a
 
 //##############################################################################
 
+
 //! Format doughnut chart data
 
 export function formatDoughnutData(responseData: GraphEntry[]): ChartData<"doughnut", (number | null)[], string> {
+
+console.log("Response data in formatDoughnut: ", responseData)
 
   try {
   const companyHours: { [key: string]: number } = {}; //Tomt objekt med nycklar som alltid är av typen sträng, värdet är alltid nummer
@@ -146,10 +167,11 @@ export function formatDoughnutData(responseData: GraphEntry[]): ChartData<"dough
 
   // Random colors for each company label
   const colors = companies.map(() =>
-    `rgba(${Math.random() * 255}, ${Math.random() * 255}, 235, 0.5)`
+    `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.5)`
   );
 
   return {
+
     labels: companies,
     datasets: [{
       data: hours,
@@ -189,3 +211,158 @@ export function weekRange(date: Date): string {
 
 
 //##############################################################################
+
+
+
+export async function deleteEntry(id:string, token:string | null) {
+  console.log("TOKEN",token, "ID",id)
+      const removeEntry = await axios({
+        method: "delete",
+        url: `http://localhost:5000/user/timesheet/deleteEntry`,
+        headers: { Authorization: `Bearer ${token}` },
+        data:{entryID:id}
+      });
+
+      const response = removeEntry.data;
+      // console.log("HERE IS THE DELETE RESPONSE IN functions: ",response)
+
+return {message:response}
+
+    }
+
+
+
+//##############################################################################
+
+
+
+export async function signoffTimesheet(month:string, token:string | null) {
+  console.log("TOKEN i signoff",token, "month in signoff",month)
+      const signoffEntry = await axios({
+        method: "post",
+        url: `http://localhost:5000/user/timesheet/signoff`,
+        headers: { Authorization: `Bearer ${token}` },
+        data:{signoffMonth:month}
+      });
+
+      const response = signoffEntry.data;
+
+
+return {message:response}
+
+    }
+
+
+
+//##############################################################################
+
+
+//Get all the timesheets for the specific user
+export async function fetchTimesheets(token:string | null) {
+  console.log("TOKEN i signoff",token)
+
+    const timesheets = await axios({
+      method: "get",
+      url: `http://localhost:5000/user/timesheet/fetch`,
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    const response = timesheets.data;
+    // console.log("HERE IS THE DELETE RESPONSE IN functions: ",response)
+
+return response
+
+    }
+
+
+
+//##############################################################################
+
+
+//Get the timesheets from all users, to admin
+export async function fetchAdminTimesheets(token:string | null) {
+  // console.log("TOKEN i signoff",token)
+
+    const timesheets = await axios({
+      method: "get",
+      url: `http://localhost:5000/admin/pendingtimesheet/fetch`,
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    const response = timesheets.data;
+    // console.log("HERE IS THE DELETE RESPONSE IN functions: ",response)
+
+return response
+
+    }
+
+
+
+//##############################################################################
+
+
+
+export async function fetchSubmittedEntries(token:string | null) {
+  // console.log("TOKEN i signoff",token)
+
+    const entries = await axios({
+      method: "get",
+      url: `http://localhost:5000/admin/submittedentries/fetch`,
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    const response = entries.data;
+    // console.log("HERE IS THE GET ENTRIES RESPONSE IN functions: ",response)
+
+return response
+
+    }
+
+
+    export async function handleApproval(timesheetId:string, token:string | null, action:"approve" | "reject") {
+
+      if (!token) {
+        throw new Error("No token provided");
+      }
+      if (!timesheetId) {
+        throw new Error("No timesheet ID provided");
+      }
+      if (action !== "approve" && action !== "reject") {
+        throw new Error("Invalid action provided");
+      }
+      if (action === "approve") {
+        if (!window.confirm("Are you sure you want to approve this timesheet?")) {
+          console.log("Approval cancelled by user");
+          return;
+        }
+
+      console.log("Timesheet ID: ", timesheetId, "Action: ", action, "Token: ", token)
+             const response = await axios({
+                method: "put",
+                url: `http://localhost:5000/admin/timesheet/approval`,
+                headers: { Authorization: `Bearer ${token}` },
+                data:{timesheetId, action}
+              })
+
+              return response;
+
+
+
+      }else if (action === "reject") {
+        if (!window.confirm("Are you sure you want to reject this timesheet?")) {
+          console.log("Rejection cancelled by user");
+          return;
+        }
+
+      console.log("Timesheet ID: ", timesheetId, "Action: ", action, "Token: ", token)
+       const response = await axios({
+          method: "put",
+          url: `http://localhost:5000/admin/timesheet/approval`,
+          headers: { Authorization: `Bearer ${token}` },
+          data:{timesheetId, action}
+        })
+console.log("Response from handleApproval: ", response)
+        return response;
+
+      }
+    }

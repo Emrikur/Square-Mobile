@@ -6,7 +6,9 @@ import { getEnv }  from './src/config/env';
 import router from './src/api/routes/auth';
 import graphRoutes from "./src/api/routes/graphRoutes"
 import modalRoute from "./src/api/routes/modalRoute"
+import adminRoutes from "./src/api/routes/adminRoutes"
 import companyRoute from "./src/api/routes/companyRoute"
+import userRoute from './src/api/routes/userRoute';
 
 
 const env = getEnv();
@@ -26,11 +28,18 @@ app.use(cors({
   credentials: true,
 }));
 
+
+
+
 app.use(express.json());
 
+
+
+app.use("/user", userRoute)
 app.use("/company", companyRoute)
 app.use("/timeEntry", modalRoute)
-app.use("/dashboard/graph", graphRoutes)
+app.use("/dashboard", graphRoutes)
+app.use("/admin", adminRoutes)
 app.use("/modal", modalRoute)
 app.use('/auth', router);
 

@@ -1,0 +1,61 @@
+.page-section{
+  margin-top: auto;
+}
+
+
+.user-creation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  margin: 0 auto;
+  gap: 1rem;
+
+}
+
+.user-creation-form {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  background-color: var(--social-bg);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  gap: 5px;
+  width: 90%;
+
+  input {
+    padding: 5px;
+    height: 34px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin:0;
+    label {
+      margin: 0;
+    }
+  }
+
+  #role{
+    padding: 5px;
+    height: 34px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin:0;
+    margin: 0 0 .75rem 0;
+
+    option {
+      font-size: 12px;
+    }
+  }
+
+#status{
+  padding: 5px;
+    height: 34px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin:  0 0 .75rem 0;
+
+    option {
+      font-size: 12px;
+    }
+}
+}

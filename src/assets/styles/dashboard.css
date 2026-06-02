@@ -1,10 +1,23 @@
+.dashboard-section-wrapper{
+  display: flex;
+  margin-top: auto;
+  flex-direction: column;
+  justify-content: space-evenly;
 
+}
+
+.dashboard-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .dashboard-hero {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap : 1rem;
+  justify-content: center;
   padding-left: 10px;
   padding-bottom: 2rem;
   text-align: left;
@@ -14,8 +27,37 @@
     rgb(255, 255, 255) 0%,
     rgb(243, 243, 243) 100%
   );
+  box-shadow:0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  height: fit-content;
   p {
     margin: 0;
+  }
+
+  svg{
+    padding: 10px
+  }
+}
+
+.welcome-message{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.log-entry-label{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+
+  p{
+    font-size: 18px;
+     margin: 0;
   }
 }
 
@@ -32,20 +74,64 @@
   color: var(--text-muted);
 }
 
-.quick-create-modal {
-  display: flex;
-  flex-direction: column;
-  z-index: 200;
-  width: 80vw;
-  height: 70vh;
-  top: 50;
-  border-radius: 5px;
-  position: absolute;
-  margin: 0 auto;
-  background-color: #ffffff;
+
+
+
+
+
+#log-modal::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.25s ease;
+  display: 0.25s allow-discrete; overlay: 0.25s allow-discrete;
+  opacity: 1;
+}
+#log-modal{
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    transition: opacity 0.25s ease, transform 0.25s ease,
+    display 0.25s allow-discrete, overlay 0.25s allow-discrete;
+    pointer-events: none;
+    box-sizing: border-box;
+    flex-direction: column;
+    z-index: 200;
+    width: 90%;
+    height: fit-content;
+    overflow-y: scroll;
+    border-radius: 5px;
+    position: absolute;
+    margin: 0 auto;
+    background-color: #ffffff;
+    pointer-events: none;
+     top: 12%;
+  }
+
+  #log-modal[open] {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    display: flex;
+    flex-direction: column;
+    z-index: 200;
+    box-sizing: border-box;
+    width: 100%;
+    height: fit-content;
+    overflow-y: scroll;
+    border-radius: 5px;
+    position: absolute;
+    margin: 0 auto;
+    background-color: #ffffff;
+    pointer-events: auto;
+     top: 12%;
 
   .close-modal {
     align-self: flex-end;
+  }
+  }
+
+  @starting-style{
+    #log-modal[open]{
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+    }
   }
 
   .modal-form-container {
@@ -54,6 +140,7 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+
   }
   .modal-form {
     display: flex;
@@ -62,9 +149,6 @@
     margin-top: auto;
     width: 100%;
     height: 70%;
-    gap: 5px;
 
 
   }
-
-}

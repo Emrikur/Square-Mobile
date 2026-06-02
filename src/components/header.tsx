@@ -3,15 +3,16 @@ import "../assets/styles/header.css";
 import { House } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import avatar from "../assets/images/avatars/avatar-bear.png"
 // import logo from "../assets/images/navbar-square-logo.png"
 
 export default function Header() {
-  const { username } = useAuth();
+  const { username, avatar } = useAuth();
   const navigate = useNavigate();
   function toUserPage() {
     navigate(`/${username}`);
   }
+
+  const currentAvatar = `/avatars/${avatar}.png`
   function toDashboard() {
     navigate(`/dashboard`);
   }
@@ -29,7 +30,7 @@ export default function Header() {
         </div>
         <div className="userHub">
           <House  height={35} width={35} onClick={toDashboard}/>
-          <img id="user-avatar" onClick={toUserPage} src={avatar} alt="an image-link to the user page of a oil painted bear, sitting." />
+          <img id="user-avatar" onClick={toUserPage} src={currentAvatar} alt="an image-link to the user page of a oil painted bear, sitting." />
         </div>
       </header>
     </>
