@@ -1,6 +1,7 @@
 import Login from "../components/login";
 import logo from "../assets/images/navbar-square-logo.png";
 import "../assets/styles/loginPage.css";
+import axios from "axios";
 export default function LoginPage() {
   return (
     <>

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { toast } from 'react-toastify';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -13,10 +14,12 @@ export default function Login() {
   async function submitForm(event: React.FormEvent<HTMLFormElement>) {
     const form = event.currentTarget;
 
+
+
     try {
       event.preventDefault();
 
-      // console.log( form.username.value, form.password.value);
+
       const checkLogin = await axios({
         method: "post",
         url: "http://localhost:5000/auth/login",
@@ -26,28 +29,24 @@ export default function Login() {
         },
       });
 
-      if (checkLogin.data.success) {
+      if (checkLogin.data.success === true) {
         const response = checkLogin.data;
         setAnswer(response.message);
         setTimeout(() => {
-          login(response.token, response.email, response.full_name, response.role);
+          login(response.token, response.email, response.full_name, response.role, response.avatar);
           navigate("/dashboard");
 
         }, 3000);
 
 
-        // console.log("The message: ",response.message)
-
-
-
-      } else {
+      } else if(checkLogin.data.success === false) {
         const response = checkLogin.data;
-        navigate("/login");
-        setErr(response.message);
+
+        toast(response.message);
       }
     } catch (error) {
       console.error(error);
-      setErr("An error occurred during login");
+      toast("An error occurred during login");
     }
   }
 
@@ -59,7 +58,7 @@ export default function Login() {
           <input
             name="email"
             className="login-input"
-            type="text"
+            type="email"
             placeholder="Email"
           />
           <input

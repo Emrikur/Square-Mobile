@@ -2,9 +2,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 0 auto;
+  margin: 1rem auto;
   align-items: center;
   width: 90vw;
+  height:fit-content;
 }
 
 .timegraph-wrapper {
@@ -102,7 +103,7 @@ background: linear-gradient(
   justify-content: center;
   color: white;
   background: #5670F5;
-background: linear-gradient(
+  background: linear-gradient(
   180deg,
   rgba(86, 112, 245, 1) 0%,
   rgba(61, 52, 220, 1) 100%

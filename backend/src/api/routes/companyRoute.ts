@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { getCompanies } from "../controllers/companyController";
+import { getCompanies, getCompanyHours } from "../controllers/companyController";
 import authMiddleware from "../middleware/authMiddleware";
 
 const router = Router();
 
-router.get("/:id", authMiddleware, getCompanies);
+router.get("/user/:id", authMiddleware, getCompanies);
+router.get("/total-hours", authMiddleware, getCompanyHours);
 
 export default router;

@@ -46,7 +46,6 @@ export default function TimeRegisterGraph() {
   const navigate = useNavigate()
   const { token } = useAuth();
   const [filter, setGraphFilter] = useState<Filter>("week");
-  // const [filterData, setFilterData] = useState<Array<string>>([])
   const [responseData, setResponseData] = useState<GraphType[]>([]);
   const [currentWeek, setCurrentWeek] = useState<GraphType[]>([])
 
@@ -62,7 +61,7 @@ export default function TimeRegisterGraph() {
       // console.log("THE RESPONSE.JSON: ", checkGraph.data);
 
       // console.log("This is the DATA FROM THE COMPANY CALL", checkGraph.data.data)
-      //  setFilterData(checkGraph.data.response)
+
       const response = checkGraph.data.data;
       setResponseData(response);
     }
@@ -95,26 +94,55 @@ const sortedData = [...responseData].sort(
 
 const currentHours = currentWeek.reduce((sum, entry) => sum + Number(entry.hours_worked), 0)
 const weekTarget = 40;
-// const currentDate = Date()
 const currentMonth = new Date().toLocaleDateString("en-US", { month: "short" })
 const circumference = 2 * Math.PI * 60
 const percentage = Math.min(currentHours / weekTarget, 1)
 const offset = circumference * (1 - percentage)
-const excessHours = (currentHours - weekTarget) * 1.5
-
-const doughnutOptions = {
+// const excessHours = (currentHours - weekTarget) * 1.5
+// const companies = formatDoughnutData(responseData)
+// console.log("Companies: ", companies)
+const barOptions = {
   plugins: {
+    legend:{
+      labels: {
+        font:{size:16, weight:"bold" as const},
+        size: 16,
+        padding: 10,
+       boxWidth:14
+      },
+      position:"bottom" as const
+    },
     datalabels: {
-      color: "white",
+      color: "black" as const,
       font: {
         size: 18,
-        weight: "bold" as const
+        weight: "normal" as const,
+      }
+    }
+  }
+}
+const doughnutOptions = {
+  plugins: {
+    legend:{
+      labels: {
+        font:{size:16, weight:"bold" as const},
+        size: 16,
+        padding: 10,
+       boxWidth:14
+      },
+      position:"bottom" as const
+    },
+    datalabels: {
+      color: "black" as const,
+      font: {
+        size: 18,
+        weight: "normal" as const,
       }
     }
   }
 }
 
-console.log(`Current flex: ${excessHours}hrs`,)
+// console.log(`Current flex: ${excessHours}hrs`,)
   return (
     <>
       <div className="graph-section-wrapper">
@@ -193,7 +221,20 @@ style={{margin:"0", padding:"0"}}
             <div>
               <div>
 
-                {filter ==="month" ? <Doughnut style={{width:"90vw", height:"auto"}} data={formatDoughnutData(responseData)} options={doughnutOptions}/> : <Bar style={{width:"90vw", height:"auto"}} data={formatGraphData(responseData, filter)} />}
+                {filter ==="month" ?
+
+                    <Doughnut
+                      style={{width:"90vw", height:"auto"}}
+                      data={formatDoughnutData(responseData)}
+                      options={doughnutOptions}
+                    />
+
+
+                :
+                <Bar
+                  style={{width:"90vw", height:"auto"}}
+                  data={formatGraphData(responseData, filter)}
+                  options={barOptions}/>}
 
               </div>
               <div className="graph-table-container">

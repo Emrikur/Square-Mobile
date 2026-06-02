@@ -1,10 +1,9 @@
-import { fetchGraphData } from "../../services/dbCalls";
+import { queryGraphData, queryTimesheetEntriesByMonth, queryTimesheetMonthByName } from "../../services/dbCalls";
 import { Request, Response } from "express";
 
 
 
 //##############################################################################
-
 
 
 export async function getGraphsData(req: Request, res: Response) {
@@ -17,7 +16,7 @@ export async function getGraphsData(req: Request, res: Response) {
   const userId = req.userId;
   const filter = req.params.filterCat as Filter;
 
-  const data = await fetchGraphData(userId, filter);
+  const data = await queryGraphData(userId, filter);
 
   // console.log("Here is data: ", data)
   res.json({ data });
@@ -39,7 +38,7 @@ export async function getGraphsWeekData(req: Request, res: Response) {
   const userId = req.userId;
   const filter = req.params.filterCat as Filter;
 
-  const data = await fetchGraphData(userId, filter);
+  const data = await queryGraphData(userId, filter);
 
   // console.log("Here is data: ", data)
   res.json({ data });
@@ -48,3 +47,31 @@ export async function getGraphsWeekData(req: Request, res: Response) {
 
 
 //##############################################################################
+
+
+
+export async function getAllTimeData(req: Request, res: Response) {
+
+  const userId = req.userId;
+  const filter = req.params.filterCategory;
+
+  console.log("user Id from graphcontroller:", userId, "Filter category in graphcontroller: ", filter)
+
+  const data = await queryTimesheetEntriesByMonth(userId, filter);
+
+  console.log("Det gick bra: ", req.params.filterCategory)
+  res.json({ data });
+}
+
+
+
+// Hämtar månader från entries med draft (För select-options)
+export async function getdraftMonths(req: Request, res: Response) {
+
+  const userId = req.userId;
+
+  const data = await queryTimesheetMonthByName(userId);
+
+  console.log("Here is data: ", data)
+  res.json({ data });
+}

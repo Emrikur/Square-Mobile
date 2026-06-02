@@ -4,6 +4,8 @@ import { AuthContext } from "./AuthContext";
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   //Gets the stored session token and makes sure the null value is not a string ("null")
+
+
   const getStoredToken = () => {
     const token = sessionStorage.getItem("token");
     return token && token !== "null" ? token : null;
@@ -22,16 +24,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const role = sessionStorage.getItem("role");
     return role && role !== "null" ? role : null;
   }
+  const getStoredAvatar = () => {
+    const avatar = sessionStorage.getItem("avatar");
+    return avatar && avatar !== "null" ? avatar : null;
+  }
+
+  const updateAvatar = (newAvatar:string) => {
+  setUserAvatar(newAvatar);
+  sessionStorage.setItem("avatar", newAvatar)
+}
 
 
   const [token, setToken] = useState<string | null>(getStoredToken());
   const [email, setEmail] = useState<string | null>(getStoredEmail());
   const [username, setUsername] = useState<string | null>(getStoredUsername());
   const [role, setUserRole] = useState<string | null>(getStoredUserRole());
+  const [avatar, setUserAvatar] = useState<string | null>(getStoredAvatar());
+  console.log("Avatar state in context:", avatar);
 
-
-
-  const login = (newToken: string, mail: string, full_name:string, role:string) => {
+  const login = (newToken: string, mail: string, full_name:string, role:string, avatar:string) => {
 
     if (newToken && mail) {
     setToken(newToken);
@@ -43,10 +54,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setEmail(mail);
       setUsername(full_name);
       setUserRole(role);
+      setUserAvatar(avatar);
       sessionStorage.setItem("token", newToken);
       sessionStorage.setItem("email", mail);
       sessionStorage.setItem("full_name", full_name);
       sessionStorage.setItem("role", role);
+      sessionStorage.setItem("avatar", avatar);
     } else {
       console.error("Token or username is missing during login.");
     }
@@ -59,12 +72,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     sessionStorage.removeItem("email");
     sessionStorage.removeItem("full_name");
     sessionStorage.removeItem("role");
+    sessionStorage.removeItem("avatar");
     sessionStorage.clear();
   };
 
 
   return (
-    <AuthContext.Provider value={{ token, email, username,role, login, logout }}>
+    <AuthContext.Provider value={{ token, email, username, role, avatar,updateAvatar, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

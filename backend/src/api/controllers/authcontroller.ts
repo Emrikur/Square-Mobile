@@ -21,6 +21,7 @@ type LoginResponse =
       full_name: string;
       email: string;
       role: string;
+      avatar: string;
     }
   | { success: false; message: string };
 
@@ -76,6 +77,9 @@ export const login = async (req: Request, res: Response<LoginResponse>) => {
         {
           userId: user.id,
           email: user.email,
+          full_name: user.full_name,
+          role: user.role,
+          avatar: user.avatar
         },
         env.JWT_SECRET!,
         { expiresIn: "24h" },
@@ -88,9 +92,11 @@ export const login = async (req: Request, res: Response<LoginResponse>) => {
         success: true,
         email: user.email,
         role: user.role,
+        avatar: user.avatar,
       });
     } catch (err) {
       console.log("Database call failed:", err);
+      res.json({success:false, message:""})
     }
   } catch (err) {
     console.error("DB error: ", err);

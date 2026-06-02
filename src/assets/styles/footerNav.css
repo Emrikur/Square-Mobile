@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: var(--bg);
+  background-color: var(--social-bg);
   padding: 0.5rem 0;
   gap: 1rem;
   width: 100%;
@@ -26,6 +26,9 @@
   gap: 0.5px;
   transition: color 0.3s ease;
 }
+.nav-link.selected {
+  color: var(--primary);
+}
 
 .nav-link:hover {
   color: var(--primary);
@@ -33,4 +36,17 @@
 
 .nav-link:focus-within {
 color: var(--primary);
+}
+
+.approvalsNav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--social-bg);
+  padding: 0.5rem 0;
+  gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  height: 90px;
+  border-top: 1px solid var(--border);
 }

@@ -1,59 +1,99 @@
-import "../assets/styles/dashboard.css"
-import QuickLogModal from "../components/QuickLogModal"
+import "../assets/styles/dashboard.css";
+import QuickLogModal from "../components/QuickLogModal";
 import LayoutWrapper from "../components/LayoutWrapper";
 import { useAuth } from "../hooks/useAuth";
 import TimeRegisterGraph from "../components/TimeRegisterGraph";
 import { CirclePlus, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function Dashboard() {
-  const {username} = useAuth()
+  const { username } = useAuth();
 
-const [modalOpen, setModalOpen] = useState(false)
+  // const [modalOpen, setModalOpen] = useState(false);
 
+  //Scroll to top on view refresh
+  //###############################
 
-//Scroll to top on view refresh
-//###############################
+  function ScrollUp() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
-function ScrollUp(){
-  window.scrollTo({top:0, behavior:"smooth"})
-}
-
-useEffect(() => {
-  ScrollUp()
-},[])
+  useEffect(() => {
+    ScrollUp();
+  }, []);
 
   return (
     <LayoutWrapper>
-
-      <section style={{marginTop:"13rem", backgroundColor:"#F5F5F5"}}>
-      {modalOpen && (
-        <div onClick={() => setModalOpen(false)}
-          style={{ position: "fixed", inset: 0, background: "transparent", zIndex:"10", top:130, overflowY:"scroll" }}
+      <section className="dashboard-section-wrapper">
+        <dialog // Fick nos om command/commandfor via Kevin Powell på instagram, väldigt smidigt sätt att hantera modaler på!
+          id="log-modal"
+          style={{ display: "flex", flexDirection: "column" }}
         >
-          <div onClick={(e) => e.stopPropagation()} // your actual modal
-            style={{ background: "#fff", borderRadius: "16px", padding: "1.5rem" }}
+          <button
+            type="button"
+            style={{
+              background: "transparent",
+              border: "none",
+              padding: "0",
+              cursor: "none",
+              display: "flex",
+            }}
+            className="close-modal"
+            {...({
+              command: "close",
+              commandfor: "log-modal",
+            } as React.HTMLAttributes<HTMLButtonElement>)}
           >
-            <dialog className="quick-create-modal" style={{display:"flex", flexDirection:"column"}}>
-              <X className="close-modal" onClick={() => setModalOpen(() => !modalOpen)} width={32} height={32}/>
-              <div className="modal-form-container">
-                <p style={{width:"80%"}}>Log your hours quickly by selecting a company, entering the date and number of hours worked. For more detailed reporting, visit the full report page.</p>
-                  <QuickLogModal/>
-              </div>
-
-            </dialog>
+            <X
+              style={{ marginLeft: "auto" }}
+              /* onClick={() => setModalOpen(() => !modalOpen)} */
+              width={32}
+              height={32}
+            />
+          </button>
+          <div className="modal-form-container">
+            <p style={{ width: "90%" }}>
+              Log your hours quickly by selecting a company, entering the date
+              and number of hours worked. For more detailed reporting, visit the
+              full report page.
+            </p>
+            <QuickLogModal />
           </div>
-        </div>
-      )}
-        <div style={{margin:"0 10px",display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
+        </dialog>
+
+
+        <div className="dashboard-header">
           <h1>Dashboard</h1>
         </div>
         <div className="dashboard-hero">
+          <div className="welcome-message">
           <p>Good day, {username}</p>
-          <CirclePlus onClick={() => setModalOpen(() => !modalOpen)} width={42} height={42}/>
+          <button
+            style={{
+              background: "transparent",
+              border: "none",
+              padding: "0",
+              cursor: "none",
+              display: "flex",
+            }}
+            type="button"
+            {...({
+              command: "show-modal",
+              commandfor: "log-modal",
+            } as React.HTMLAttributes<HTMLButtonElement>)}
+          >
+            <CirclePlus
+              /* onClick={() => setModalOpen(() => !modalOpen)} */ width={42}
+              height={42}
+            />
+          </button>
+          </div>
+          <div className="log-entry-label">
+            <p>Log-entry</p>
+          </div>
         </div>
         <section>
-          <TimeRegisterGraph/>
+          <TimeRegisterGraph />
         </section>
       </section>
     </LayoutWrapper>

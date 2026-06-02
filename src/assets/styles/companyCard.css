@@ -17,7 +17,7 @@
   background: #4292fb;
   background: linear-gradient(180deg, #4292fb 0%, #2f4ce5 100%);
   h1 {
-    font-family: var(--TimeburnerBold);
+    font-family: var(--Inter);
   }
 }
 

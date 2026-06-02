@@ -7,7 +7,9 @@ interface AuthContextType {
   email: string | null;
   username:string | null;
   role:string | null;
-  login: (token: string, email: string, username:string,role:string) => void;
+  avatar:string | null;
+  updateAvatar: (avatar: string) => void;
+  login: (token: string, email: string, username:string,role:string, avatar:string,) => void;
   logout: () => void;
 }
 

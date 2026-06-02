@@ -27,16 +27,16 @@ export default function CompanyCard() {
     async function fetchCompanyData() {
       const response = await axios({
         method: "get",
-        url: `http://localhost:5000/company/${id}`,
+        url: `http://localhost:5000/company/user/${id}`,
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      console.log("Company data: ", response.data);
+      // console.log("Company data: ", response.data);
 
       setCompanyResponse(response.data[0]);
     }
     fetchCompanyData();
-    console.log("Company response: ", companyResponse);
+    // console.log("Company response: ", companyResponse);
   }, []);
 
   const params = useParams();
@@ -45,7 +45,7 @@ export default function CompanyCard() {
     <LayoutWrapper>
       <section className="company-card-wrapper">
         <div className="company-title-container">
-          <h1>{params.companyname}</h1>
+          <h1 style={{ textAlign: "center" }}>{params.companyname}</h1>
         </div>
         <div className="company-details">
           <div className="details">

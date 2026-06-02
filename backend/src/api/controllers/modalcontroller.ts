@@ -1,5 +1,4 @@
-import { fetchCompanyData } from "../../services/dbCalls";
-import { addNewEntry } from "../../services/dbCalls";
+import { queryCompanyData, queryaddNewEntry } from "../../services/dbCalls";
 import { Request, Response } from "express";
 
 
@@ -9,18 +8,22 @@ import { Request, Response } from "express";
 
 
 export async function getCompanies(req:Request, res:Response){
-const data = await fetchCompanyData()
+const data = await queryCompanyData()
 
 // console.log("Here is data: ", data)
 res.json(data)
 }
 export async function addEntry(req:Request, res:Response){
-  console.log("REQ BODY: ",req.body)
-  const userId = req.userId
-const data = await addNewEntry(userId, req.body)
 
-// console.log("Here is data: ", data)
-res.json(data)
+
+    console.log("REQ BODY: ",req.body)
+    const userId = req.userId
+    const data = await queryaddNewEntry(userId, req.body)
+
+  // console.log("Here is data: ", data)
+  res.json(data)
+
+
 }
 
 
