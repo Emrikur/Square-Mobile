@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 import {CirclePlus, ClockPlus} from "lucide-react"
-import type { FormData } from "../lib/types";
+import type { EntryFormData } from "../lib/types";
 import { toast } from 'react-toastify';
 
 
@@ -20,8 +20,8 @@ interface GraphType {
 
   const {token} = useAuth()
 const [dbResponse, setDbResponse] = useState<GraphType[]>([]);
-// const [formData, setFormData] = useState<FormData[]>([]);
-const [formResponse, setFormResponse] = useState<FormData | null>(null);
+// const [EntryFormData, setEntryFormData] = useState<EntryFormData[]>([]);
+const [formResponse, setFormResponse] = useState<EntryFormData | null>(null);
 const [wordcounter, setWordCounter] = useState<number>(0);
 
 async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){

@@ -1,4 +1,4 @@
-export interface FormData {
+export interface EntryFormData {
   id:string,
   date:string,
   hours:string,

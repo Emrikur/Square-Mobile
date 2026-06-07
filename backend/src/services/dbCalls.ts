@@ -1,5 +1,5 @@
 import pool from "../db";
-import type { FormData } from "../../types/types";
+import type { EntryFormData } from "../../types/types";
 import bcrypt from "bcrypt";
 
 
@@ -83,18 +83,18 @@ export async function querySpecificCompanyData(companyId: string) {
 
 
 
-export async function queryaddNewEntry(userId: string, formData: FormData) {
+export async function queryaddNewEntry(userId: string, EntryFormData: EntryFormData) {
   console.log("User id: ", userId);
-  console.log("Form data: ", formData);
+  console.log("Form data: ", EntryFormData);
 
         await pool.query(
          `INSERT INTO time_entries (user_id, company_id, work_date, hours_worked, description) VALUES ($1, $2, $3, $4, $5)`,
          [
            userId,
-           formData.id,
-           formData.date,
-           formData.hours,
-           formData.description,
+           EntryFormData.id,
+           EntryFormData.date,
+           EntryFormData.hours,
+           EntryFormData.description,
          ],
        );
 
