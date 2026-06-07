@@ -5,6 +5,7 @@
     "useDefineForClassFields": true,
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "module": "ESNext",
+    "outDir": "./dist",
     "types": ["vite/client"],
     "skipLibCheck": true,
 
