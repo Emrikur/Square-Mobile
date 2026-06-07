@@ -23,7 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .env
-env.ts
 node_modules/
 
 work hours schema.sql
