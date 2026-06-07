@@ -39,6 +39,7 @@ export default function QuickLogModal() {
   interface GraphType {
     id: string;
     name: string;
+    is_active: boolean;
   }
 
 
@@ -70,10 +71,10 @@ async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
 
 
 
-    console.log("hours value ",form.hours.value)
-    console.log("company value ",form.company.value)
-    console.log("description value ",form.description.value)
-    console.log("date value ",form.date.value)
+    // console.log("hours value ",form.hours.value)
+    // console.log("company value ",form.company.value)
+    // console.log("description value ",form.description.value)
+    // console.log("date value ",form.date.value)
 
     if(!form.hours.value ||!form.company.value || !form.description.value || !form.date.value){
 
@@ -141,15 +142,9 @@ async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
         setTimeout(() => {
           setFormResponse(null)
         }, 3000);
-        // const response = addEntry.data;
-        // setErr(response.message);
       }
-
       }
-
-
     }
-
 
     } catch (error) {
       console.error(error);
@@ -167,25 +162,31 @@ async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      // console.log("THE RESPONSE.JSON: ", checkGraph.data);
+      // console.log("THE RESPONSE.JSON: ", checkCompanies.data);
 
       //  setFilterData(checkGraph.data.response)
 
       const response = checkCompanies.data;
-      console.log(response.message)
+
+
+
+      // console.log("response: ", response);
       setDbResponse(response);
     }
     // console.log(token, email)
 
     fetchCompanies();
+    // console.log("DB response: ", dbResponse)
   }, []);
+
 
 
   return (
     <>
       <form className="modal-form" onSubmit={handleFormSubmit}>
         <select className="modal-company-select" name="company">
-          {dbResponse ? dbResponse.map((company) => <option className="form-option" value={company.id} key={company.id}>{company.name}</option>): null}
+          {/* Company with a inactive status is not shown in the company list */}
+          {dbResponse ? dbResponse.filter((company) => company.is_active).map((company) => <option className="form-option" value={company.id} key={company.id}>{company.name}</option>): null}
         </select>
 
           <input onClick={(e) => e.currentTarget.showPicker()} className="input-date" name="date"  type="date" />

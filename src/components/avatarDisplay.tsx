@@ -2,7 +2,7 @@
 import { useAuth } from "../hooks/useAuth";
 export default function AvatarDisplay() {
 const { email , username, role, avatar } = useAuth();
-console.log("From context - \nUsername:", username,"\nRole:", role,"\nemail:", email);
+// console.log("From context - \nUsername:", username,"\nRole:", role,"\nemail:", email);
 // const currentAvatar = `../assets/images/avatars/${avatarPortrait}.png`
 console.log("Avatar in displayavatar: ", avatar)
   return (

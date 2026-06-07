@@ -41,7 +41,7 @@ export async function queryGraphData(userId: string, filter: string) {
 
 
 export async function queryCompanyData() {
-  const response = await pool.query(`SELECT name, id FROM companies`);
+  const response = await pool.query(`SELECT name, id, is_active FROM companies`);
   // console.log("RESPONSE ROWS: ",response.rows)
   return response.rows;
 }

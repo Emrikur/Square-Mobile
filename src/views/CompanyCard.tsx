@@ -66,7 +66,10 @@ export default function CompanyCard() {
           </div>
           <div className="details">
             <label htmlFor="status">Active status</label>
-            <p>{companyResponse?.is_active ? "Active" : "Inactive"}</p>
+            <div style={{display: "flex", alignItems: "center", gap: "5px"}}>
+              <p>{companyResponse?.is_active ? "Active" : "Inactive"}</p>
+              <div className={companyResponse?.is_active ? "status-indicator-green" : "status-indicator-red"}></div>
+            </div>
           </div>
         </div>
       </section>

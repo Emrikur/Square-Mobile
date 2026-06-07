@@ -18,11 +18,11 @@ export default function UserPage() {
 
   const [avatarToggle, setavatarToggle] = useState(false)
   const [totalHours, setTotalHours] = useState(0)
-  const { username, role, email, token, avatar, updateAvatar } = useAuth();
+  const { username, role, email, token, updateAvatar } = useAuth();
   const [avatarImg, setAvatarImg] = useState<string>("");
 
 
-  console.log("AVATAR IMG in userpage: ",avatar)
+  // console.log("AVATAR IMG in userpage: ",avatar)
 
 
 
@@ -63,7 +63,7 @@ console.log(avatarImg)
 
 
     if(avatarImg){
-    const data = await axios({
+     await axios({
         method: "put",
         url: `http://localhost:5000/user/avatar`,
         headers: { Authorization: `Bearer ${token}`},
@@ -99,16 +99,21 @@ updateTheAvatar()
           <AvatarDisplay />
           <div className="change-avatar" onClick={() => setavatarToggle(!avatarToggle)} ><Images style={{color:"black"}}/></div>
           {avatarToggle && (
-            <select name="avatar-select" id="avatar-select" onChange={handleAvatarChange}>
+            <select  name="avatar-select" id="avatar-select" onChange={handleAvatarChange}>
+
+              <option value="">avatars</option>
               <option value="time-singularity">Time Singularity</option>
-              <option value="avatar-bear">Bear</option>
-              <option value="avatar-bike">Bike</option>
-              <option value="avatar-boat">Boat</option>
-              <option value="avatar-car">Car</option>
-              <option value="avatar-fish">Fish</option>
-              <option value="avatar-owl">Owl</option>
+              <option value="avatar-astronaut">Astronaut</option>
+              <option value="avatar-black-hole">Black Hole</option>
+              <option value="avatar-galaxy">Galaxy</option>
+              <option value="avatar-moon">Moon</option>
+              <option value="avatar-meteor">Meteor</option>
+              <option value="avatar-nebula">Nebula</option>
               <option value="avatar-rocket">Rocket</option>
-              <option value="avatar-turtle">Turtle</option>
+              <option value="avatar-saturn">Saturn</option>
+              <option value="avatar-spacecloud">Space Cloud</option>
+              <option value="avatar-spaceship">Space Ship</option>
+              <option value="avatar-spacestation">Space Station</option>
             </select>
           )}
           </div>

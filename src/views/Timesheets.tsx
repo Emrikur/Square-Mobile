@@ -40,9 +40,9 @@ export default function Timesheets() {
 
     const entryID = e[0]
 
-    const confirmDeletetion = window.confirm(`Are you sure you want to delete entry: \nname: ${e[1]} \ndate: ${formatEventDateTime(e[2], {year:"numeric", day:"numeric", month:"long"})}`)
+    const confirmDeletion = window.confirm(`Are you sure you want to delete entry: \nname: ${e[1]} \ndate: ${formatEventDateTime(e[2], {year:"numeric", day:"numeric", month:"long"})}`)
 
-  if(!confirmDeletetion){
+  if(!confirmDeletion){
     return
   }else{
     console.log("Entry id: ",entryID)

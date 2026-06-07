@@ -1,6 +1,5 @@
 // import { use } from 'react';
 import "../assets/styles/header.css";
-import { House } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 // import logo from "../assets/images/navbar-square-logo.png"
@@ -20,16 +19,12 @@ export default function Header() {
     <>
       <header className="header">
         <div className="mobile-logo-header">
-          <a href="/dashboard">
-            {/* <img
-              src={logo}
-              alt="Logo"
-            /> */}
+
             <h1 id="logo-company-header">Time Singularity</h1>
-          </a>
+
         </div>
         <div className="userHub">
-          <House  height={35} width={35} onClick={toDashboard}/>
+          <h2 onClick={toDashboard} style={{fontSize:"1rem", margin:"0", padding:"0", fontFamily: "'Manrope', sans-serif" }}>Dashboard</h2>{/* <House  height={35} width={35} onClick={toDashboard}/> */}
           <img id="user-avatar" onClick={toUserPage} src={currentAvatar} alt="an image-link to the user page of a oil painted bear, sitting." />
         </div>
       </header>

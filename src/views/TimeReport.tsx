@@ -15,6 +15,7 @@ export default function TimeReport() {
 interface GraphType {
     id: string;
     name: string;
+    is_active: boolean;
   }
 
   const {token} = useAuth()
@@ -107,7 +108,7 @@ async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
     <LayoutWrapper>
       <form className="form" onSubmit={handleFormSubmit}>
         <select className="company-select" name="company">
-          {dbResponse ? dbResponse.map((company) => <option className="form-option" value={company.id} key={company.id}>{company.name}</option>): null}
+          {dbResponse ? dbResponse.filter((company) => company.is_active).map((company) => <option className="form-option" value={company.id} key={company.id}>{company.name}</option>): null}
         </select>
         <div className="date-wrapper">
           <input onClick={(e) => e.currentTarget.showPicker()} className="input-date" name="date"  type="date" />

@@ -1,15 +1,17 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap');
 
 * {
   font-family: "Inter", sans-serif;
 }
-@font-face {
+/* @font-face {
   font-family: 'TimeburnerBold';
   src: url('./assets/font/TimeburnerBold-peGR.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-}
+} */
 
 
 html,

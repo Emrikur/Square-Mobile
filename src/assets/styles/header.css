@@ -17,20 +17,23 @@
   display: flex;
   align-items: center;
   margin-right: 2rem;
-
   gap: 20px;
 }
 .mobile-logo-header{
-width: fit-content;
-height: fit-content;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+
 
 }
 
 #logo-company-header{
-  font-family:var(--TimeburnerBold);
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
   color:black;
-  margin-left:1rem;
-  text-decoration:none;
+margin:auto 0 auto 1rem;
 
 }
 .header-home-link{
