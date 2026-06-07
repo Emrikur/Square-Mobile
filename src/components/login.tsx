@@ -9,7 +9,7 @@ export default function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [answer, setAnswer] = useState("");
-  const [err, setErr] = useState("");
+
 
   async function submitForm(event: React.FormEvent<HTMLFormElement>) {
     const form = event.currentTarget;
@@ -84,7 +84,7 @@ export default function Login() {
               <div className="loader"></div>
             </div>
           )}
-          {err && <p className="error-message">{err}</p>}
+
         </form>
       </div>
     </>
