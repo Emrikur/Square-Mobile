@@ -1,5 +1,5 @@
 {
-  "name": "square-mobile-backend",
+  "name": "time-singularity-backend",
   "version": "1.0.0",
   "scripts": {
     "dev": "ts-node server.ts",
@@ -19,7 +19,7 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^4.17.25",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^20.19.39",
+    "@types/node": "^20.19.42",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   }
