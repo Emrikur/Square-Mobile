@@ -148,14 +148,14 @@ const dates = [...new Set(responseData.map((entry) => entry.work_date))].sort((a
 
 export function formatDoughnutData(responseData: GraphEntry[]): ChartData<"doughnut", (number | null)[], string> {
 
-console.log("Response data in formatDoughnut: ", responseData)
 
   try {
   const companyHours: { [key: string]: number } = {}; //Tomt objekt med nycklar som alltid är av typen sträng, värdet är alltid nummer
 
   responseData.forEach((entry) => {
 
-    //If the company does NOT have a key in the object, then it creates one with 0 as value and adds the worked hours to that.
+    //If the company does NOT have a key in the object,
+    //then it creates one with 0 as value and adds the worked hours to that.
     if (!companyHours[entry.company_name]) {
       companyHours[entry.company_name] = 0;
     }
@@ -215,7 +215,7 @@ export function weekRange(date: Date): string {
 
 
 export async function deleteEntry(id:string, token:string | null) {
-  console.log("TOKEN",token, "ID",id)
+  // console.log("TOKEN",token, "ID",id)
       const removeEntry = await axios({
         method: "delete",
         url: `http://localhost:5000/user/timesheet/deleteEntry`,
@@ -237,7 +237,7 @@ return {message:response}
 
 
 export async function signoffTimesheet(month:string, token:string | null) {
-  console.log("TOKEN i signoff",token, "month in signoff",month)
+  // console.log("TOKEN i signoff",token, "month in signoff",month)
       const signoffEntry = await axios({
         method: "post",
         url: `http://localhost:5000/user/timesheet/signoff`,
@@ -259,7 +259,7 @@ return {message:response}
 
 //Get all the timesheets for the specific user
 export async function fetchTimesheets(token:string | null) {
-  console.log("TOKEN i signoff",token)
+
 
     const timesheets = await axios({
       method: "get",
@@ -268,7 +268,6 @@ export async function fetchTimesheets(token:string | null) {
     });
 
     const response = timesheets.data;
-    // console.log("HERE IS THE DELETE RESPONSE IN functions: ",response)
 
 return response
 
@@ -336,7 +335,7 @@ return response
           return;
         }
 
-      console.log("Timesheet ID: ", timesheetId, "Action: ", action, "Token: ", token)
+      // console.log("Timesheet ID: ", timesheetId, "Action: ", action, "Token: ", token)
              const response = await axios({
                 method: "put",
                 url: `http://localhost:5000/admin/timesheet/approval`,
@@ -354,7 +353,7 @@ return response
           return;
         }
 
-      console.log("Timesheet ID: ", timesheetId, "Action: ", action, "Token: ", token)
+      // console.log("Timesheet ID: ", timesheetId, "Action: ", action, "Token: ", token)
        const response = await axios({
           method: "put",
           url: `http://localhost:5000/admin/timesheet/approval`,

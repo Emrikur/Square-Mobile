@@ -11,7 +11,6 @@ interface LayoutWrapperProps {
 export default function LayoutWrapper({ children }: LayoutWrapperProps) {
 
 const {role} = useAuth()
-console.log(role)
 
   return (
     <div className="app-container">

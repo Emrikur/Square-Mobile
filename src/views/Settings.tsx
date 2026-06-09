@@ -71,7 +71,7 @@ export default function Settings() {
             ></label>
           </div>
         </div> */}
-        <CreateHashPassword/>
+        {/* <CreateHashPassword/> */}
         <div className='settings-btn-wrapper'>
           <div className='default-Btn'>
           <button

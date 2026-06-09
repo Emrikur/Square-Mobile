@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [username, setUsername] = useState<string | null>(getStoredUsername());
   const [role, setUserRole] = useState<string | null>(getStoredUserRole());
   const [avatar, setUserAvatar] = useState<string | null>(getStoredAvatar());
-  console.log("Avatar state in context:", avatar);
+  // console.log("Avatar state in context:", avatar);
 
   const login = (newToken: string, mail: string, full_name:string, role:string, avatar:string) => {
 
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if(!mail){
       return null;
     }
-    console.log("the role ", role)
+    // console.log("the role ", role)
       setEmail(mail);
       setUsername(full_name);
       setUserRole(role);

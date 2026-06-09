@@ -32,8 +32,11 @@ const boostingPhrase = [  "Great work today!",
   "Proud of your effort!"]
 const pepTalk =boostingPhrase[Math.floor(Math.random() * boostingPhrase.length)];
 
+interface QuickLogModalProps {
+  onNewEntry: () => void;
+}
 
-export default function QuickLogModal() {
+export default function QuickLogModal({onNewEntry}: QuickLogModalProps) {
 
 
   interface GraphType {
@@ -50,10 +53,13 @@ export default function QuickLogModal() {
   // const [EntryFormData, setEntryFormData] = useState<EntryFormData[]>([]);
   const [formResponse, setFormResponse] = useState<EntryFormData | null>(null);
   const [wordCounter, setWordCounter] = useState<number>(0);
+  const [refresh, setRefresh] = useState(false);
 
 
 
-
+function handleRefresh(){
+  setRefresh((prev) => !prev)
+}
 
 
 async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
@@ -69,13 +75,6 @@ async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
       return
     }
 
-
-
-    // console.log("hours value ",form.hours.value)
-    // console.log("company value ",form.company.value)
-    // console.log("description value ",form.description.value)
-    // console.log("date value ",form.date.value)
-
     if(!form.hours.value ||!form.company.value || !form.description.value || !form.date.value){
 
       toast.error("Missing credentials")
@@ -90,7 +89,7 @@ async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
         if(Number(form.hours.value) === 24){
         toast.info("Tip: You should consider changing your working schedule")
       }
- // console.log( form.username.value, form.password.value, form.hours.value, form.description.value);
+
 
       const addEntry = await toast.promise( axios({
         method: "post",
@@ -130,9 +129,10 @@ async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
 
         form.reset();
         setWordCounter(0)
+        onNewEntry()
         // console.log("The message: ",response.message)
 
-
+return
 
       } else {
         const response = addEntry.data;
@@ -162,28 +162,21 @@ async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      // console.log("THE RESPONSE.JSON: ", checkCompanies.data);
-
-      //  setFilterData(checkGraph.data.response)
 
       const response = checkCompanies.data;
 
-
-
-      // console.log("response: ", response);
       setDbResponse(response);
     }
-    // console.log(token, email)
 
     fetchCompanies();
-    // console.log("DB response: ", dbResponse)
-  }, []);
+
+  }, [refresh,token]);
 
 
 
   return (
     <>
-      <form className="modal-form" onSubmit={handleFormSubmit}>
+      <form className="modal-form" onSubmit={async (e) => {await handleFormSubmit(e); handleRefresh()}}>
         <select className="modal-company-select" name="company">
           {/* Company with a inactive status is not shown in the company list */}
           {dbResponse ? dbResponse.filter((company) => company.is_active).map((company) => <option className="form-option" value={company.id} key={company.id}>{company.name}</option>): null}
