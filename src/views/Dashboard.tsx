@@ -4,12 +4,20 @@ import LayoutWrapper from "../components/LayoutWrapper";
 import { useAuth } from "../hooks/useAuth";
 import TimeRegisterGraph from "../components/TimeRegisterGraph";
 import { CirclePlus, X } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
 
 export default function Dashboard() {
   const { username } = useAuth();
 
   // const [modalOpen, setModalOpen] = useState(false);
+const [refresh, setRefresh] = useState(false)
+
+
+
+function onEntryCreation(){
+  setRefresh((prev) => !prev)
+}
 
   //Scroll to top on view refresh
   //###############################
@@ -57,7 +65,7 @@ export default function Dashboard() {
               and number of hours worked. For more detailed reporting, visit the
               full report page.
             </p>
-            <QuickLogModal />
+            <QuickLogModal onNewEntry={onEntryCreation} />
           </div>
         </dialog>
 
@@ -93,7 +101,7 @@ export default function Dashboard() {
           </div>
         </div>
         <section>
-          <TimeRegisterGraph />
+          <TimeRegisterGraph refresh={refresh} />
         </section>
       </section>
     </LayoutWrapper>

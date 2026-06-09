@@ -28,7 +28,7 @@ export default function UserPage() {
 
    function handleAvatarChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const selectedAvatar = e.target.value;
-    console.log("Selected avatar:", selectedAvatar);
+    // console.log("Selected avatar:", selectedAvatar);
     setAvatarImg(selectedAvatar);
       sessionStorage.setItem("avatar", selectedAvatar)
     // const response = await axios.post("/api/user/avatar", { avatar: selectedAvatar });
@@ -59,7 +59,7 @@ useEffect(()=> {
 
   async function updateTheAvatar(){
 
-console.log(avatarImg)
+// console.log(avatarImg)
 
 
     if(avatarImg){

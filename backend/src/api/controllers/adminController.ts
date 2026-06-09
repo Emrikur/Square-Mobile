@@ -65,10 +65,6 @@ res.json(response)
 
 
 
-
-
-
-
 export async function addNewUser(req:Request, res:Response){
 const { fullName, email, password, role, salary, status } = req.body;
 

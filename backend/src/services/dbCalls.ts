@@ -282,7 +282,7 @@ await client.query("BEGIN");
   const newTimesheet = await client.query(
     `INSERT INTO timesheets
     (user_id, status, month, submitted_at)
-    VALUES ($1, 'pending', NOW(), DATE_TRUNC('month', $2::DATE))
+    VALUES ($1, 'pending', DATE_TRUNC('month', $2::DATE), NOW())
     RETURNING id`,
   [userId, month]
   );

@@ -31,7 +31,10 @@ ChartJS.register(
   ChartDataLabels,
 );
 
-export default function TimeRegisterGraph() {
+interface RefreshProps{
+  refresh:boolean
+}
+export default function TimeRegisterGraph({refresh}: RefreshProps) {
 
 
   interface GraphType {
@@ -42,6 +45,7 @@ export default function TimeRegisterGraph() {
     hours_worked: string;
     filter:Filter
   }
+
 
   const navigate = useNavigate()
   const { token } = useAuth();
@@ -69,7 +73,7 @@ export default function TimeRegisterGraph() {
     // console.log(filter)
 
     getGraph();
-  }, [filter]);
+  }, [filter, refresh, token]);
 
   useEffect(() => {
   async function fetchWeekTotal() {
@@ -84,7 +88,7 @@ export default function TimeRegisterGraph() {
   }
 
   fetchWeekTotal();
-}, []);
+}, [token]);
 
 const sortedData = [...responseData].sort(
     (a, b) => new Date(a.work_date).getTime() - new Date(b.work_date).getTime()
