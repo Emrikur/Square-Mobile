@@ -8,7 +8,8 @@ export default function ChangePasswordForm() {
 
 const [errorMsg, setErrorMsg] = useState("")
 const [successMsg, setSuccessMsg] = useState("")
-const {token} = useAuth()
+const {token, email} = useAuth()
+const isGuest = email === "guest@ts.com";
 
 
   async function handleForm(event: React.FormEvent<HTMLFormElement>) {
@@ -17,6 +18,7 @@ const {token} = useAuth()
     event.preventDefault();
     const form = event.currentTarget;
     console.log( form["new-password"].value, form["confirm-password"].value, form["current-password"].value);
+
     const newPassword = form["new-password"].value;
     const confirmPassword = form["confirm-password"].value;
     const currentPassword = form["current-password"].value;
@@ -130,7 +132,7 @@ const {token} = useAuth()
       {errorMsg ? <p className="error">{errorMsg}</p> : null}
       {successMsg ? <p className="success">{successMsg}</p> : null}
 
-      <button type="submit" className="default-Btn">
+      <button disabled={isGuest} type="submit" className="default-Btn">
         Change Password
       </button>
     </form>

@@ -18,7 +18,7 @@ export default function LoginPage() {
           </div>
         </div> */}
         <div className="login-wrapper">
-          <img src={logo} alt="Logo" />
+          <img id="login-logo" src={logo} alt="Logo" />
           <Login />
         </div>
       </main>

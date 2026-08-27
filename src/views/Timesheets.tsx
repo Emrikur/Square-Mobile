@@ -10,12 +10,14 @@ import {
   deleteEntry,
   signoffTimesheet,
   fetchTimesheets,
+  getdraftMonthNames
 } from "../lib/functions";
 import type { EntryTypes, MonthTypes, TimesheetTypes } from "../lib/types";
 import { toast } from "react-toastify";
 
 export default function Timesheets() {
-  const { token } = useAuth();
+  const { token, email } = useAuth();
+  const isGuest = email === "guest@ts.com";
   const navigate = useNavigate();
   const [months, setMonths] = useState<MonthTypes[]>([]);
   const [entries, setEntries] = useState<EntryTypes[]>([]);
@@ -71,6 +73,7 @@ export default function Timesheets() {
     "#2563EB",
   ];
 
+
   // console.log(totalMileage)
 
   async function handleDeleteEntry(e: Array<string>) {
@@ -90,9 +93,15 @@ export default function Timesheets() {
     if (!confirmDeletion) {
       return;
     } else {
-      await deleteEntry(entryID, token).then((response) => {
-        toast.success(response.message);
-      });
+      if(!token){
+        navigate("/")
+        return;
+      }
+
+        await deleteEntry(entryID, token).then((response) => {
+          toast.success(response.message);
+        });
+
     }
   }
 
@@ -108,20 +117,18 @@ export default function Timesheets() {
   }
 
   useEffect(() => {
-    async function getdraftMonthNames() {
-      const getMonthNames = await axios({
-        method: "get",
-        url: `http://localhost:5000/dashboard/draftmonths`,
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const response = getMonthNames.data.data;
 
+    if(!token){
+      navigate("/")
+      return;
+    }
+    getdraftMonthNames(token).then((response) => {
       setMonths(response);
       if (response.length > 0) {
         setSelectedOptions(response[0].month);
       }
-    }
-    getdraftMonthNames();
+    });
+
 
     fetchTimesheets(token).then((response) => {
       setTimesheets(response);
@@ -137,6 +144,10 @@ export default function Timesheets() {
         url: `http://localhost:5000/dashboard/allTime/${selectedOption}`,
         headers: { Authorization: `Bearer ${token}` },
       });
+      if(!token){
+        navigate("/")
+        return;
+      }
 
       const response = getEntries.data.data;
 
@@ -180,12 +191,12 @@ export default function Timesheets() {
             <Clock className="summary-clock" />
           </div>
           <button
-            disabled={entries.length < 1}
+            disabled={entries.length < 1 || isGuest}
             className="timesheets-signoff-button"
             style={{
               backgroundColor:
-                entries.length < 1 ? "rgb(161, 161, 161)" : "#ffffff",
-              color: entries.length < 1 ? "#000c4b" : "#2f4ce5",
+                entries.length < 1 || isGuest ? "rgb(161, 161, 161)" : "#ffffff",
+              color: entries.length < 1 || isGuest ? "#000c4b" : "#2f4ce5",
             }}
             onClick={async () => {
               await handleSignoff();
@@ -282,6 +293,7 @@ export default function Timesheets() {
                         <p>{entry.status.replace("d", "D")}</p>
                       </div>
                       <button
+                      disabled={isGuest}
                         onClick={async () => {
                           await handleDeleteEntry([
                             entry.id,
@@ -329,6 +341,7 @@ export default function Timesheets() {
                     <p>{entry.status.replace("d", "D")}</p>
                   </div>
                   <button
+                  disabled={isGuest}
                     onClick={async () => {
                       await handleDeleteEntry([
                         entry.id,

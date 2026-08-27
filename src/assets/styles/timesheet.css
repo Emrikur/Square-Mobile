@@ -108,6 +108,8 @@ flex-direction: column;
 gap: 1rem;
 align-items: center;
 margin-top: 1rem;
+max-height: 70vh;
+overflow-y: scroll;
   }
 
   .timesheet-entry-wrapper{
@@ -393,9 +395,17 @@ width: 35px;
   border: none;
 }
 
+.delete-entry:disabled {
+  background-color: transparent;
+  font-weight: 400;
+  margin-top: 5px;
+  margin-right: 10px;
+  color: rgb(161, 161, 161);
+  border: none;
+}
+
 .latest-timesheets-wrapper {
   width: 100%;
-
   border-radius: 10px;
   display: flex;
   flex-direction: column;

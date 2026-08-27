@@ -65,9 +65,9 @@ export const login = async (req: Request, res: Response<LoginResponse>) => {
           .status(401)
           .json({ success: false, message: "Invalid email or password" });
       }
-      const validPassword = await bcrypt.compare(password, user.password_hash);
+      const passwordIsValid = await bcrypt.compare(password, user.password_hash);
 
-      if (!validPassword) {
+      if (!passwordIsValid) {
         return res
           .status(401)
           .json({ success: false, message: "Invalid credentials" });
@@ -82,7 +82,7 @@ export const login = async (req: Request, res: Response<LoginResponse>) => {
           avatar: user.avatar
         },
         env.JWT_SECRET!,
-        { expiresIn: "24h" },
+        { expiresIn: "12h" },
       );
       console.log("Here is the user role: ", user.role);
       res.json({

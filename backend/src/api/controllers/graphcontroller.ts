@@ -12,13 +12,11 @@ export async function getGraphsData(req: Request, res: Response) {
   if (!allowedFilter.includes(req.params.filterCat)) {
     return res.status(401).send("Invalid Filter");
   }
-  // console.log("FROM GRAPHCONTROLLER ",req.userId, " and ", req.params.filterCat)
   const userId = req.userId;
   const filter = req.params.filterCat as Filter;
 
   const data = await queryGraphData(userId, filter);
 
-  // console.log("Here is data: ", data)
   res.json({ data });
 }
 

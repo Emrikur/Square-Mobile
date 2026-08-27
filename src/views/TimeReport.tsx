@@ -6,6 +6,8 @@ import { useAuth } from "../hooks/useAuth";
 import {CirclePlus, ClockPlus} from "lucide-react"
 import type { EntryFormData } from "../lib/types";
 import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -18,12 +20,12 @@ interface GraphType {
     is_active: boolean;
   }
 
-  const {token} = useAuth()
+  const {token, email} = useAuth()
+  const isGuest = email === "guest@ts.com";
 const [dbResponse, setDbResponse] = useState<GraphType[]>([]);
-// const [EntryFormData, setEntryFormData] = useState<EntryFormData[]>([]);
 const [formResponse, setFormResponse] = useState<EntryFormData | null>(null);
 const [wordcounter, setWordCounter] = useState<number>(0);
-
+const navigate = useNavigate()
 async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
 
 
@@ -35,6 +37,11 @@ async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
       toast.error("Description can't exceed 150 characters")
       return
     }
+  if(Number(form.hours.value) > 24){
+    toast.error("May only log a maximum of 24 hours")
+    return;
+
+  }
     console.log("hours value ",form.hours.value)
     console.log("company value ",form.company.value)
     console.log("description value ",form.description.value)
@@ -57,7 +64,10 @@ async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
         success: "Entry added successfully!",
         error: "Failed to add entry."
       });
-
+if(!token){
+  navigate("/")
+  return;
+}
       if (addEntry.data.success) {
         const response = addEntry.data;
         console.log("Response message ",response.message)
@@ -96,6 +106,11 @@ async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
       });
 
       const response = checkCompanies.data;
+
+      if(!token){
+        navigate("/")
+        return;
+      }
       setDbResponse(response);
     }
 
@@ -127,7 +142,7 @@ async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
           <p className={wordcounter > 150 ? "word-count-exceeded" : "word-count"}>{wordcounter}/150</p>
         </div>
 
-        {formResponse ? <p className={formResponse.success ? "success-message" : "failed-message"}>{formResponse.message}</p> : <button className="default-Btn" type="submit"><CirclePlus/><p>Log hrs</p> </button>}
+        {formResponse ? <p className={formResponse.success ? "success-message" : "failed-message"}>{formResponse.message}</p> : <button disabled={isGuest} className="default-Btn" id="logHoursBtn" type="submit"><CirclePlus/><p>Log hrs</p> </button>}
 
       </form>
       </LayoutWrapper>

@@ -2,7 +2,7 @@ import "../assets/styles/reportModal.css"
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
-import {CirclePlus, ClockPlus} from "lucide-react"
+import {CirclePlus} from "lucide-react"
 import type { EntryFormData } from "../lib/types";
 import { toast } from 'react-toastify';
 
@@ -38,7 +38,8 @@ interface QuickLogModalProps {
 
 export default function QuickLogModal({onNewEntry}: QuickLogModalProps) {
 
-
+  const {email} = useAuth()
+const isGuest = email === "guest@ts.com"
   interface GraphType {
     id: string;
     name: string;
@@ -78,11 +79,13 @@ async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
     if(!form.hours.value ||!form.company.value || !form.description.value || !form.date.value){
 
       toast.error("Missing credentials")
+      return;
     }else{
 
 
       if(Number(form.hours.value) > 24){
         toast.error("Hours can't exceed the amount of hours in a day")
+        return;
       }else{
 
 
@@ -187,7 +190,7 @@ return
           <p className="peptalk">*{pepTalk}*</p>
           <div className="hours">
             <input name="hours" placeholder="Hours" className="hours-input" type="text" />
-            <ClockPlus className="hours-icon" size={20}/>
+            {/* <ClockPlus className="hours-icon" size={20}/> */}
           </div>
 
 
@@ -197,7 +200,7 @@ return
           <p className={wordCounter > 150 ? "word-count-exceeded" : "word-count"}>{wordCounter}/150</p>
         </div>
 
-        {formResponse ? <p className={formResponse.success ? "success-message" : "failed-message"}>{formResponse.message}</p> : <button className="entry-submit-btn" style={{marginTop:"1rem"}} type="submit"><CirclePlus/><p>Log hrs</p> </button>}
+        {formResponse ? <p className={formResponse.success ? "success-message" : "failed-message"}>{formResponse.message}</p> : <button disabled={isGuest} className="entry-submit-btn" type="submit"><CirclePlus/><p>Log hrs</p> </button>}
 
       </form>
     </>

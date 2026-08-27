@@ -134,4 +134,9 @@
   color: white;
   border: none;
   transition: 2s ease-in-out;
+  margin-top:1rem;
+}
+.entry-submit-btn:disabled{
+  background: #A0A0A0;
+  cursor: not-allowed;
 }

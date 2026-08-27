@@ -152,3 +152,9 @@
 
 
   }
+
+  @media (min-width: 768px) {
+    .modal-form {
+      width: 70%;
+    }
+  }

@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login } = useAuth(); // I Auth Provider (Frontendet)
   const [answer, setAnswer] = useState("");
 
 
@@ -86,6 +86,12 @@ export default function Login() {
           )}
 
         </form>
+
+        <div className="guestBox">
+          <p>Guest account:</p>
+          <p>Email: Guest@ts.com</p>
+          <p>Password: guest</p>
+        </div>
       </div>
     </>
   );
