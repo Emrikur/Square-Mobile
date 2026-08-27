@@ -2,10 +2,10 @@
   "name": "time-singularity-backend",
   "version": "1.0.0",
   "scripts": {
-    "dev": "ts-node server.ts",
-    "build": "tsc",
-    "start": "node ./dist/server.js"
-  },
+  "start": "node dist/server.js",
+  "build": "tsc",
+  "dev": "ts-node-dev src/server.ts"
+},
   "dependencies": {
     "axios": "^1.6.0",
     "bcrypt": "^6.0.0",
