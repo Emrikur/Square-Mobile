@@ -20,6 +20,19 @@ main{
   margin: auto auto;
 }
 
+.guestBox{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+  margin-top: 20px;
+
+  p{
+    padding:0;
+    margin:0;
+  }
+}
 
 
 

@@ -45,5 +45,6 @@ export interface TimesheetTypes{
       user_name:string
       user_id:string;
       user_avatar:string;
-      work_date:string
+      work_date:string;
+      submitted_at:string
 }

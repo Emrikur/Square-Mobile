@@ -12,10 +12,8 @@ import userRoute from './src/api/routes/userRoute';
 
 
 const env = getEnv();
-
 const app = express();
 const PORT = env.PORT;
-// const HOST = env.HOST;
 
 app.use(cors({
   origin:

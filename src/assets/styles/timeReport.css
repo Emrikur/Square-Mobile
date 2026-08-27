@@ -142,3 +142,13 @@
   margin-right: 5%;
   color: red;
 }
+
+.default-Btn:disabled{
+  background: #A0A0A0;
+  cursor: not-allowed;
+
+}
+/* #logHoursBtn:disabled{
+  background: #A0A0A0;
+  cursor: not-allowed;
+} */

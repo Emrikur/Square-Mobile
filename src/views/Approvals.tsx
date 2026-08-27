@@ -73,12 +73,10 @@ export default function Approvals() {
   useEffect(() => {
     fetchAdminTimesheets(token).then((response) => {
       setTimesheets(response);
-      console.log("Timesheet response från functions: ", response);
     });
 
     fetchSubmittedEntries(token).then((response) => {
       setEntries(response);
-      console.log("entries response från functions: ", response);
     });
   }, [refresh,token]);
 

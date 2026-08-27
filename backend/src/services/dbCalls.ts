@@ -279,22 +279,37 @@ export async function querySignoff(userId: string, month:string) {
 try{
 await client.query("BEGIN");
 
-  const newTimesheet = await client.query(
-    `INSERT INTO timesheets
-    (user_id, status, month, submitted_at)
-    VALUES ($1, 'pending', DATE_TRUNC('month', $2::DATE), NOW())
-    RETURNING id`,
-  [userId, month]
+const exisitingTimesheet = await client.query(
+    `SELECT id FROM timesheets
+     WHERE user_id = $1
+     AND status = 'pending'
+     AND DATE_TRUNC('month', month) = DATE_TRUNC('month', $2::DATE)`,
+    [userId, month]
   );
 
-  const timesheetID = newTimesheet.rows[0].id;
+  let timesheetId;
+
+  if(exisitingTimesheet.rows.length > 0){
+    timesheetId = exisitingTimesheet.rows[0].id
+  }else {
+
+    const newTimesheet = await client.query(
+      `INSERT INTO timesheets
+      (user_id, status, month, submitted_at)
+      VALUES ($1, 'pending', DATE_TRUNC('month', $2::DATE), NOW())
+      RETURNING id`,
+    [userId, month]
+    );
+    timesheetId = newTimesheet.rows[0].id;
+  }
+
 
 await client.query(`UPDATE time_entries
   SET status='submitted', timesheet_id = $1
   WHERE user_id=$2
   AND status='draft'
   AND DATE_TRUNC('month', work_date) = DATE_TRUNC('month', $3::DATE)`,
-  [timesheetID, userId, month])
+  [timesheetId, userId, month])
 
   await client.query("COMMIT");
   return {success: true, message:`Signoff complete for ${month}`};

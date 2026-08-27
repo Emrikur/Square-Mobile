@@ -34,6 +34,7 @@ ChartJS.register(
 interface RefreshProps{
   refresh:boolean
 }
+
 export default function TimeRegisterGraph({refresh}: RefreshProps) {
 
 
@@ -62,15 +63,10 @@ export default function TimeRegisterGraph({refresh}: RefreshProps) {
         data: { filterData: filter },
       });
 
-      // console.log("THE RESPONSE.JSON: ", checkGraph.data);
-
-      // console.log("This is the DATA FROM THE COMPANY CALL", checkGraph.data.data)
-
       const response = checkGraph.data.data;
       setResponseData(response);
     }
-    // console.log(token, email)
-    // console.log(filter)
+
 
     getGraph();
   }, [filter, refresh, token]);
@@ -102,10 +98,11 @@ const currentMonth = new Date().toLocaleDateString("en-US", { month: "short" })
 const circumference = 2 * Math.PI * 60
 const percentage = Math.min(currentHours / weekTarget, 1)
 const offset = circumference * (1 - percentage)
-// const excessHours = (currentHours - weekTarget) * 1.5
-// const companies = formatDoughnutData(responseData)
-// console.log("Companies: ", companies)
+
 const barOptions = {
+  responsive:true,
+  maintainAspectRatio:true,
+  aspectRatio:1.2,
   plugins: {
     legend:{
       labels: {
@@ -119,13 +116,16 @@ const barOptions = {
     datalabels: {
       color: "black" as const,
       font: {
-        size: 18,
+        size: 20,
         weight: "normal" as const,
       }
     }
   }
 }
 const doughnutOptions = {
+  responsive: true,
+  maintainAspectRatio: true,
+  aspectRatio: 1.0,
   plugins: {
     legend:{
       labels: {
@@ -222,13 +222,14 @@ style={{margin:"0", padding:"0"}}
         {/* Graphs */}
         <div>
           {responseData && responseData.length > 0 ? (
-            <div>
-              <div>
+            <div >
+              <div style={{marginBottom:"2rem"}}>
 
                 {filter ==="month" ?
 
                     <Doughnut
-                      style={{width:"90vw", height:"auto"}}
+                    className="donut-graph"
+
                       data={formatDoughnutData(responseData)}
                       options={doughnutOptions}
                     />

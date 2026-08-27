@@ -214,7 +214,7 @@ export function weekRange(date: Date): string {
 
 
 
-export async function deleteEntry(id:string, token:string | null) {
+export async function deleteEntry(id:string, token:string) {
   // console.log("TOKEN",token, "ID",id)
       const removeEntry = await axios({
         method: "delete",
@@ -227,6 +227,25 @@ export async function deleteEntry(id:string, token:string | null) {
       // console.log("HERE IS THE DELETE RESPONSE IN functions: ",response)
 
 return {message:response}
+
+    }
+
+
+
+//##############################################################################
+
+
+
+export async function getdraftMonthNames(token:string) {
+
+      const getMonthNames = await axios({
+        method: "get",
+        url: `http://localhost:5000/dashboard/draftmonths`,
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const response = getMonthNames.data.data;
+
+      return response;
 
     }
 
@@ -258,7 +277,7 @@ return {message:response}
 
 
 //Get all the timesheets for the specific user
-export async function fetchTimesheets(token:string | null) {
+export async function fetchTimesheets(token:string) {
 
 
     const timesheets = await axios({
@@ -356,7 +375,7 @@ return response
       // console.log("Timesheet ID: ", timesheetId, "Action: ", action, "Token: ", token)
        const response = await axios({
           method: "put",
-          url: `http://localhost:5000/admin/timesheet/approval`,
+          url: `http://localhost:5000/user/timesheet/history`,
           headers: { Authorization: `Bearer ${token}` },
           data:{timesheetId, action}
         })
@@ -365,3 +384,16 @@ console.log("Response from handleApproval: ", response)
 
       }
     }
+
+    /* export async function  fetchPastTimesheets(token:string){
+
+      console.log("The token", token)
+      const response = await axios({
+        method:"get",
+        url:`http://localhost:5000/user/timesheet/history`,
+        headers:{ Authorization: `Bearer ${token}`},
+      })
+      return response
+
+
+    } */
