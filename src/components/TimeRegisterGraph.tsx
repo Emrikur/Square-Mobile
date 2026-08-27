@@ -58,7 +58,7 @@ export default function TimeRegisterGraph({refresh}: RefreshProps) {
     async function getGraph() {
       const checkGraph = await axios({
         method: "get",
-        url: `http://localhost:5000/dashboard/graph/${filter}`,
+        url: `${import.meta.env.VITE_API_URL}/dashboard/graph/${filter}`,
         headers: { Authorization: `Bearer ${token}` },
         data: { filterData: filter },
       });
@@ -75,7 +75,7 @@ export default function TimeRegisterGraph({refresh}: RefreshProps) {
   async function fetchWeekTotal() {
     const response = await axios({
       method: "get",
-      url: `http://localhost:5000/dashboard/graph/week`,
+      url: `${import.meta.env.VITE_API_URL}/dashboard/graph/week`,
       headers: { Authorization: `Bearer ${token}` }
     });
 

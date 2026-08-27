@@ -27,7 +27,7 @@ export default function CompanyCard() {
     async function fetchCompanyData() {
       const response = await axios({
         method: "get",
-        url: `http://localhost:5000/company/user/${id}`,
+        url: `${import.meta.env.VITE_API_URL}/company/user/${id}`,
         headers: { Authorization: `Bearer ${token}` },
       });
 

@@ -39,7 +39,7 @@ export default function UserPage() {
   useEffect(() => {
 
     async function fetchUserHours() {
-      const response = await axios(`http://localhost:5000/company/total-hours`, {
+      const response = await axios(`${import.meta.env.VITE_API_URL}/company/total-hours`, {
         method:"get",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ useEffect(()=> {
     if(avatarImg){
      await axios({
         method: "put",
-        url: `http://localhost:5000/user/avatar`,
+        url: `${import.meta.env.VITE_API_URL}/user/avatar`,
         headers: { Authorization: `Bearer ${token}`},
         data:{
           avatarURL:avatarImg

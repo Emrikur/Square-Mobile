@@ -50,7 +50,7 @@ async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>){
       // console.log( form.username.value, form.password.value);
       const addEntry = await toast.promise(axios({
         method: "post",
-        url: "http://localhost:5000/timeEntry/create",
+        url: `${import.meta.env.VITE_API_URL}/timeEntry/create`,
         headers: { Authorization: `Bearer ${token}` },
         data: {
 
@@ -101,7 +101,7 @@ if(!token){
     async function fetchCompanies() {
       const checkCompanies = await axios({
         method: "get",
-        url: `http://localhost:5000/modal/companies`,
+        url: `${import.meta.env.VITE_API_URL}/modal/companies`,
         headers: { Authorization: `Bearer ${token}` }
       });
 

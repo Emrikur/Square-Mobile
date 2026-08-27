@@ -141,7 +141,7 @@ export default function Timesheets() {
     async function getEntries() {
       const getEntries = await axios({
         method: "get",
-        url: `http://localhost:5000/dashboard/allTime/${selectedOption}`,
+        url: `${import.meta.env.VITE_API_URL}/dashboard/allTime/${selectedOption}`,
         headers: { Authorization: `Bearer ${token}` },
       });
       if(!token){
