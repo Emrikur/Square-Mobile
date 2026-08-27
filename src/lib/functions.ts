@@ -218,7 +218,7 @@ export async function deleteEntry(id:string, token:string) {
   // console.log("TOKEN",token, "ID",id)
       const removeEntry = await axios({
         method: "delete",
-        url: `http://localhost:5000/user/timesheet/deleteEntry`,
+        url: `${import.meta.env.VITE_API_URL}/user/timesheet/deleteEntry`,
         headers: { Authorization: `Bearer ${token}` },
         data:{entryID:id}
       });
@@ -240,7 +240,7 @@ export async function getdraftMonthNames(token:string) {
 
       const getMonthNames = await axios({
         method: "get",
-        url: `http://localhost:5000/dashboard/draftmonths`,
+        url: `${import.meta.env.VITE_API_URL}/dashboard/draftmonths`,
         headers: { Authorization: `Bearer ${token}` },
       });
       const response = getMonthNames.data.data;
@@ -259,7 +259,7 @@ export async function signoffTimesheet(month:string, token:string | null) {
   // console.log("TOKEN i signoff",token, "month in signoff",month)
       const signoffEntry = await axios({
         method: "post",
-        url: `http://localhost:5000/user/timesheet/signoff`,
+        url: `${import.meta.env.VITE_API_URL}/user/timesheet/signoff`,
         headers: { Authorization: `Bearer ${token}` },
         data:{signoffMonth:month}
       });
@@ -282,7 +282,7 @@ export async function fetchTimesheets(token:string) {
 
     const timesheets = await axios({
       method: "get",
-      url: `http://localhost:5000/user/timesheet/fetch`,
+      url: `${import.meta.env.VITE_API_URL}/user/timesheet/fetch`,
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -303,7 +303,7 @@ export async function fetchAdminTimesheets(token:string | null) {
 
     const timesheets = await axios({
       method: "get",
-      url: `http://localhost:5000/admin/pendingtimesheet/fetch`,
+      url: `${import.meta.env.VITE_API_URL}/admin/pendingtimesheet/fetch`,
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -325,7 +325,7 @@ export async function fetchSubmittedEntries(token:string | null) {
 
     const entries = await axios({
       method: "get",
-      url: `http://localhost:5000/admin/submittedentries/fetch`,
+      url: `${import.meta.env.VITE_API_URL}/admin/submittedentries/fetch`,
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -357,7 +357,7 @@ return response
       // console.log("Timesheet ID: ", timesheetId, "Action: ", action, "Token: ", token)
              const response = await axios({
                 method: "put",
-                url: `http://localhost:5000/admin/timesheet/approval`,
+                url: `${import.meta.env.VITE_API_URL}/admin/timesheet/approval`,
                 headers: { Authorization: `Bearer ${token}` },
                 data:{timesheetId, action}
               })
@@ -375,7 +375,7 @@ return response
       // console.log("Timesheet ID: ", timesheetId, "Action: ", action, "Token: ", token)
        const response = await axios({
           method: "put",
-          url: `http://localhost:5000/user/timesheet/history`,
+          url: `${import.meta.env.VITE_API_URL}/user/timesheet/history`,
           headers: { Authorization: `Bearer ${token}` },
           data:{timesheetId, action}
         })
@@ -390,7 +390,7 @@ console.log("Response from handleApproval: ", response)
       console.log("The token", token)
       const response = await axios({
         method:"get",
-        url:`http://localhost:5000/user/timesheet/history`,
+        url:`${import.meta.env.VITE_API_URL}/user/timesheet/history`,
         headers:{ Authorization: `Bearer ${token}`},
       })
       return response

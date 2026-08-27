@@ -44,7 +44,7 @@ async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 
 const response = await axios({
   method: "post",
-  url: "http://localhost:5000/admin/user/create",
+  url: `${import.meta.env.VITE_API_URL}/admin/user/create`,
   headers: { Authorization: `Bearer ${token}` },
   data: userData});
 

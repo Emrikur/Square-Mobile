@@ -50,7 +50,7 @@ const isGuest = email === "guest@ts.com";
 
         const response = await axios({
           method: "put",
-          url: "http://localhost:5000/user/change-password",
+          url: `${import.meta.env.VITE_API_URL}/user/change-password`,
           headers: { Authorization: `Bearer ${token}` },
           data: {
             current_password: currentPassword,

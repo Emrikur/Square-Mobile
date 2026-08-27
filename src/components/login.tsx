@@ -22,7 +22,7 @@ export default function Login() {
 
       const checkLogin = await axios({
         method: "post",
-        url: "http://localhost:5000/auth/login",
+        url: `${import.meta.env.VITE_API_URL}/auth/login`,
         data: {
           email: form.email.value,
           password: form.password.value,
