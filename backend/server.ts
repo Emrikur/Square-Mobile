@@ -17,14 +17,15 @@ const PORT = env.PORT;
 
 app.use(cors({
   origin:
-  [ env.FRONTEND_ORIGIN
-    /* "http://localhost:5173",
-    "http://localhost:4173",
-    "http://192.168.0.14:5173",
-    "http://192.168.0.14:4173", */
+  [ env.FRONTEND_ORIGIN,
+    "https://time-singularity.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:4173"
   ],
   credentials: true,
 }));
+
+console.log(`CORS enabled for: ${env.FRONTEND_ORIGIN}`);
 
 
 
